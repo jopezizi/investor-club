@@ -1,7 +1,7 @@
 from flask import  Flask, render_template, redirect, request, session
 import sqlite3
 import config
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -40,10 +40,28 @@ def create():
         with sqlite3.connect(database_file) as db:
             sql = 'INSERT INTO users (username, password_hash) VALUES (?,?)'
             db.execute(sql, [username, password_hash])
-            db.commit()
     except sqlite3.IntegrityError:
         return 'Käyttäjätunnus varattu.'
     
     return 'Käyttäjätunnus luotu.'
 
+@app.route('/login')
+def login():
+    username = request.form['username']
+    password = request.form['password']
 
+    sql = "SELECT password_hash FROM users WHERE username = ?"
+    with sqlite3.connect(database_file) as db:
+        result = db.execute(sql,[username])
+        password_hash = result.fetchone()
+    
+    if check_password_hash(password_hash, password):
+        session['username'] = username
+        return redirect('/')
+    else:
+        return 'Virheellinen käyttäjätunnus tai salasana.'
+    
+@app.route('/logout')
+def logout():
+    del session['username']
+    return redirect('/')
