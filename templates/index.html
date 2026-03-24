@@ -11,7 +11,7 @@
     Olet kirjautunut nimellä {{ session.username }}
   </p>
   <p>
-    <a href="/logout">Kirjaudu ulos</a>
+    <a href="/logout">Kirjaudu ulos</a> | <a href="/register">Luo käyttäjätunnus</a>
   </p>
   {% else %}
   <form action="/login" method="post">
@@ -25,7 +25,22 @@
     </p>
     <input type="submit" value="Kirjaudu" />
   </form>
+  <p>
+    <a href="/register">
+      <button>Luo uusi käyttäjä</button>
+    </a>
+  </p>
   {% endif %}
+  <hr />
+  <h1>Analyysit</h1>
+  {% for post in post_list %}
+  <p>
+    <a href='/post/{{ post.id }}'>{{post.title}}</a>
+    <br />
+  </p>
+  <hr />
+  {% endfor %}
+  <h1>Uusi analyysi</h1>
 </body>
 
 </html>
