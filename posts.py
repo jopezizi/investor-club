@@ -53,3 +53,9 @@ def search(query):
             ORDER BY p.sent_at DESC
             '''
     return app.query(sql, ('%' + query + '%'),('%' + query + '%'))
+
+def update_post(post_id, title, content):
+    sql = "UPDATE posts SET title = ?, content = ? WHERE id = ?"
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        cursor.execute(sql, (title, content, post_id))

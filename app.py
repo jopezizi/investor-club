@@ -135,3 +135,19 @@ def search():
     print(results)
     return render_template('search.html', query=query, results=results)
 
+@app.route("/edit/<int:post_id>", methods=["GET", "POST"])
+def edit_message(post_id):
+    to_edit = posts.get_post(post_id)
+
+    post = to_edit[0]
+
+    if request.method == "GET":
+        return render_template("edit.html", post=post)
+
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["content"]
+        posts.update_post(post["id"], title, content)
+        return redirect("/post/" + str(post["id"]))
+
+    return redirect("/")
