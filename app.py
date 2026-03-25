@@ -96,7 +96,12 @@ def create():
         except sqlite3.IntegrityError:
             return "VIRHE: tunnus on jo varattu"
 
-    return "Tunnus luotu"
+    return '''Tunnus luotu
+            <p>
+        <a href='/'>
+            <button>Takaisin etusivulle</button>
+        </a>
+        </p>'''
 
 @app.route("/logout")
 def logout():
