@@ -26,7 +26,10 @@ def database_init():
                title TEXT,
                content TEXT,
                sent_at TEXT,
-               user_id INTEGER REFERENCES users)
+               user_id INTEGER REFERENCES users,
+               likes INTEGER,
+               buys INTEGER,
+               sells INTEGER)
               '''),
               ('''CREATE TABLE IF NOT EXISTS comments (
                id INTEGER PRIMARY KEY,
@@ -108,3 +111,4 @@ def search():
     results = posts.search(query) if query else []
     print(results)
     return render_template('search.html', query=query, results=results)
+
