@@ -100,3 +100,11 @@ def show_post(post_id):
     post = posts.get_post(post_id)
     comments = posts.get_comments(post_id)
     return render_template('post.html', post=post, comments=comments)
+
+
+@app.route('/search')
+def search():
+    query = request.args.get('query')
+    results = posts.search(query) if query else []
+    print(results)
+    return render_template('search.html', query=query, results=results)

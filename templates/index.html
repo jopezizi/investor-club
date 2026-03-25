@@ -3,34 +3,44 @@
 
 <head>
   <title>Kirjautuminen</title>
+  <link rel="stylesheet" href="/static/main.css">
 </head>
 
 <body>
-  {% if session.username %}
-  <p>
-    Olet kirjautunut nimellä {{ session.username }}
-  </p>
-  <p>
-    <a href="/logout">Kirjaudu ulos</a> | <a href="/register">Luo käyttäjätunnus</a>
-  </p>
-  {% else %}
-  <form action="/login" method="post">
+  <div id ='header'>
+    {% if session.username %}
     <p>
-      Tunnus: <br />
-      <input type="text" name="username" />
+      Olet kirjautunut nimellä {{ session.username }}
     </p>
     <p>
-      Salasana: <br />
-      <input type="password" name="password" />
+      <a href="/logout">Kirjaudu ulos</a> | <a href="/register">Luo käyttäjätunnus</a>
     </p>
-    <input type="submit" value="Kirjaudu" />
-  </form>
-  <p>
-    <a href="/register">
-      <button>Luo uusi käyttäjä</button>
-    </a>
-  </p>
-  {% endif %}
+    {% else %}
+    <form action="/login" method="post">
+      <p>
+        Tunnus: <br />
+        <input type="text" name="username" />
+      </p>
+      <p>
+        Salasana: <br />
+        <input type="password" name="password" />
+      </p>
+      <input type="submit" value="Kirjaudu" />
+    </form>
+    <p>
+      <a href="/register">
+        <button>Luo uusi käyttäjä</button>
+      </a>
+    </p>
+    {% endif %}
+    <div class="right_header">
+      <p>
+        <a href="/search">
+          <button>Hae julkaisuja</button>
+        </a>
+      </p>
+    </div>
+  </div>
   <hr />
   <h1>Analyysit</h1>
   {% for post in post_list %}
@@ -56,6 +66,7 @@
     </p>
   </form>
  {% endif %}
+
 </body>
 
 </html>

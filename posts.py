@@ -42,3 +42,13 @@ def get_comments(post_id):
         return [{'id':comments[0][0], 'content':comments[0][1],'sent_at':comments[0][2],'user_id':comments[0][3],'post_id':comments[0][4]}]
     else:
         return 'No comments'
+    
+
+def search(query):
+    sql = '''SELECT p.id, p.title, p.content, p.sent_at, u.username
+            FROM posts p
+            JOIN users u ON p.user_id = u.id
+            WHERE p.content LIKE ?
+            ORDER BY p.sent_at DESC
+            '''
+    return app.query(sql, ('%' + query + '%'))

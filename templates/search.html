@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hakutulokset</title>
+</head>
+
+<body>
+  <form action="/search" method="get">
+    <p>
+      Hakusana:
+      {% if query %}
+      <input type="text" name="query" value="{{ query }}" />
+      {% else %}
+      <input type="text" name="query" />
+      {% endif %}
+    </p>
+    <input type="submit" value="Hae" />
+  </form>
+  <hr>
+  <h1>Hakutulokset</h1>
+  <hr>
+  {% if results %}
+    {% for result in results %}
+      <p>
+        <a href="/post/{{ result[0] }}"><b>{{ result[1] }}</b></a> | {{ result[4] }} | {{ result[3] }}
+      </p>
+      <hr>
+    {% endfor %}
+  {% else %}
+    <p>
+      Ei hakutuloksia.
+    </p>
+  {% endif %}
+</body>
+</html>
