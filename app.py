@@ -21,9 +21,11 @@ def database_init():
                username TEXT UNIQUE,
                password_hash TEXT)
               '''),
-              ('''CREATE TABLE IF NOT EXISTS analysis (
+              ('''CREATE TABLE IF NOT EXISTS posts (
                id INTEGER PRIMARY KEY,
                title TEXT,
+               content TEXT,
+               sent_at TEXT,
                user_id INTEGER REFERENCES users)
               '''),
               ('''CREATE TABLE IF NOT EXISTS comments (
@@ -31,7 +33,7 @@ def database_init():
                content TEXT,
                sent_at TEXT,
                user_id INTEGER REFERENCES users,
-               analysis_id INTEGER REFERENCES analysis)
+               post_id INTEGER REFERENCES post)
               ''')
               ]
         for q in queries:
@@ -53,10 +55,10 @@ def login():
     username = request.form.get("username", "")
     password = request.form.get("password", "")
     
-    sql = "SELECT password_hash FROM users WHERE username = ?"
-    password_hash = query(sql, username)
+    sql = "SELECT password_hash, id FROM users WHERE username = ?"
+    user_info = query(sql, username)
 
-    if not password_hash:
+    if not user_info:
         return '''VIRHE: väärä tunnus tai salasana
         <p>
         <a href='/'>
@@ -65,15 +67,36 @@ def login():
         </p>
         '''
     
-    password_hash = password_hash[0][0]
+    password_hash = user_info[0][0]
+    user_id = user_info[0][1]
 
     if check_password_hash(password_hash, password):
         session["username"] = username
+        session["user_id"] = user_id
         return redirect("/")
     else:
         return "VIRHE: väärä tunnus tai salasana"
 
 @app.route("/logout")
 def logout():
-    del session["username"]
+    session.pop("username", None)
+    session.pop("user_id", None)
     return redirect("/")
+
+@app.route('/new_post', methods=['POST'])
+def new_post():
+    if 'user_id' not in session:
+        return redirect('/')
+    
+    title = request.form['title']
+    content = request.form['content']
+    user_id = session['user_id']
+
+    post_id = posts.add_post(title, content, user_id)
+    return redirect('/post/' + str(post_id))
+
+@app.route('/post/<int:post_id>')
+def show_post(post_id):
+    post = posts.get_post(post_id)
+    comments = posts.get_comments(post_id)
+    return render_template('post.html', post=post, comments=comments)
