@@ -10,3 +10,8 @@ Sijoitusalusta, jossa käyttäjät voivat julkaista ja kommentoida osakevalintoj
 - Sovelluksessa on käyttäjäsivut, josta näkyy tilastoja: analyysien kokonaismäärä, suositusten jakauma (Osta vs. Myy), tykkäyksien määrä, kommentit
 - Analyysille voi valita luokittelun: toimiala, markkina & strategia.
 - Käyttäjä pystyy lisäämään ja välittämään muiden analyysejä/kommentteja vasta-argumentiksi / analyysin tueksi analyyseihin.
+
+# ASENNUSOHJEET
+- Suorita setup.sh- tiedosto (terminaalissa ./setup.sh) asentaaksesi kaikki tarvittavat riippuvuudet ja käynnistääksesi sivun
+- Näet terminaalista, mihin osoitteeseen verkkosivu käynnistyy (oletus http://127.0.0.1:5000
+- Voit alkaa käyttämään sivua.
