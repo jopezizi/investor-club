@@ -138,9 +138,9 @@ def search():
 @app.route("/edit/<int:post_id>", methods=["GET", "POST"])
 def edit_message(post_id):
     to_edit = posts.get_post(post_id)
-
-    post = to_edit[0]
-
+    if isinstance(to_edit, list) and to_edit:
+        post = to_edit[0]
+    
     if request.method == "GET":
         return render_template("edit.html", post=post)
 
@@ -155,7 +155,8 @@ def edit_message(post_id):
 @app.route("/remove/<int:post_id>", methods=["GET", "POST"])
 def remove_message(post_id):
     to_remove = posts.get_post(post_id)
-    post = to_remove[0]
+    if isinstance(to_remove, list) and to_remove:
+        post = to_remove[0]
 
     if request.method == "GET":
         return render_template("remove.html", post=post)
