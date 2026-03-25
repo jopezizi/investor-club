@@ -49,6 +49,7 @@ def search(query):
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE p.content LIKE ?
+            OR p.title LIKE ?
             ORDER BY p.sent_at DESC
             '''
-    return app.query(sql, ('%' + query + '%'))
+    return app.query(sql, ('%' + query + '%'),('%' + query + '%'))

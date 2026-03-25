@@ -96,7 +96,7 @@ def create():
         except sqlite3.IntegrityError:
             return "VIRHE: tunnus on jo varattu"
 
-    return '''Tunnus luotu
+    return '''Tunnus luotu. Voit kirjautua sisään etusivulla.
             <p>
         <a href='/'>
             <button>Takaisin etusivulle</button>
