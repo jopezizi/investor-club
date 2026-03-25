@@ -4,6 +4,7 @@ Sijoitusalusta, jossa käyttäjät voivat julkaista ja kommentoida osakevalintoj
 # OMINAISUUDET
 - Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 - Käyttäjä voi lisätä uuden sijoitusanalyysin (esimerkiksi "Nokian ja Nvidian kaupat tulevat vaikuttamaan Suomen markkinoihin positiivisesti")
+- Käyttäjä pystyy muokkaamaan ja poistamaan analyysejään.
 - Käyttäjä pystyy etsimään listauksia hakusanalla (esim. yrityksen nimellä)
 - Käyttäjä näkee listauksen kaikista muista analyysesistä.
 
