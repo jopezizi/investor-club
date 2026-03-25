@@ -151,3 +151,18 @@ def edit_message(post_id):
         return redirect("/post/" + str(post["id"]))
 
     return redirect("/")
+
+@app.route("/remove/<int:post_id>", methods=["GET", "POST"])
+def remove_message(post_id):
+    to_remove = posts.get_post(post_id)
+    post = to_remove[0]
+
+    if request.method == "GET":
+        return render_template("remove.html", post=post)
+    
+    if request.method == "POST":
+        if "continue" in request.form:
+            posts.remove_post(post["id"])
+        return redirect("/")
+    
+    return redirect("/")
