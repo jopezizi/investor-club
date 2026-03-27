@@ -9,4 +9,4 @@ fi
 ./.venv/bin/python -m pip install Flask
 
 export FLASK_APP=app
-./.venv/bin/flask run --debug
+./.venv/bin/flask run
