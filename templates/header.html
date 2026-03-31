@@ -8,7 +8,7 @@
             Olet kirjautunut nimellä {{ session.username }}
             </p>
             <p>
-            <a href="/logout"><button>Kirjaudu ulos</button></a> <a href="/register"><button>Luo käyttäjätunnus</button></a>
+            <a href="/logout"><button>Kirjaudu ulos</button></a>
             </p>
             {% else %}
             <form action="/login" method="post">
@@ -31,7 +31,9 @@
             <hr>
             <a href="/"><button>Etusivu</button></a>
             <a href="/search"><button>Hae julkaisuja</button></a>
+            {% if session.username %}
             <a href="/profile/{{ session.user_id }}"><button>Oma profiili</button></a>
+            {% endif %}
         </div>
         <hr />
     </body>

@@ -9,6 +9,9 @@
 
 <body>
   {% include 'header.html' %}
-  <h1>{{ profile[0].username }}</h1>
+  <h1>{{ profile[0]['username'] }}</h1>
+  <p>
+    Käyttäjä luotu {{ profile[0]['created_at'] }} ({{ profile[0]['ago'][9:11]|int }} päivää sitten)
+  </p>
 </body>
 </html>

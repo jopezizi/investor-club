@@ -19,7 +19,8 @@ def database_init():
         queries = [('''CREATE TABLE IF NOT EXISTS users (
                id INTEGER PRIMARY KEY,
                username TEXT UNIQUE,
-               password_hash TEXT)
+               password_hash TEXT,
+                created_at TEXT)
               '''),
               ('''CREATE TABLE IF NOT EXISTS posts (
                id INTEGER PRIMARY KEY,
@@ -91,7 +92,7 @@ def create():
 
     with sqlite3.connect('database.db') as db:
         try:
-            sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
+            sql = "INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, datetime('now', 'localtime'))"
             db.execute(sql, [username, password_hash])
         except sqlite3.IntegrityError:
             return "VIRHE: tunnus on jo varattu"
