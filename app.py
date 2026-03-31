@@ -3,7 +3,7 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import sqlite3
-import posts
+import posts, users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -170,5 +170,7 @@ def remove_message(post_id):
 
 @app.route("/profile/<int:user_id>", methods=['GET', 'POST'])
 def profile(user_id):
+    prof = users.get_user(user_id)
     if request.method == 'GET':
-        return render_template('profile.html'), post=post)
+        return render_template('profile.html', profile=prof)
+    return redirect('/')
