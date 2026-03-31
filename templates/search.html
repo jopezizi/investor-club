@@ -3,9 +3,12 @@
 
 <head>
   <title>Hakutulokset</title>
+  <link rel="stylesheet" href="/static/main.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 
 <body>
+  {% include 'header.html' %}
   <form action="/search" method="get">
     <p>
       Hakusana:

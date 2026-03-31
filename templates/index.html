@@ -2,47 +2,13 @@
 <html>
 
 <head>
-  <title>Kirjautuminen</title>
+  <title>Investor Club</title>
   <link rel="stylesheet" href="/static/main.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 
 <body>
-  <div id ='header'>
-    <h1><span style="color:blue">INVESTOR CLUB</span></h1>
-    {% if session.username %}
-    <p>
-      Olet kirjautunut nimellä {{ session.username }}
-    </p>
-    <p>
-      <a href="/logout">Kirjaudu ulos</a> | <a href="/register">Luo käyttäjätunnus</a>
-    </p>
-    {% else %}
-    <form action="/login" method="post">
-      <p>
-        Tunnus: <br />
-        <input type="text" name="username" />
-      </p>
-      <p>
-        Salasana: <br />
-        <input type="password" name="password" />
-      </p>
-      <input type="submit" value="Kirjaudu" />
-    </form>
-    <p>
-      <a href="/register">
-        <button>Luo uusi käyttäjä</button>
-      </a>
-    </p>
-    {% endif %}
-    <div class="right_header">
-      <p>
-        <a href="/search">
-          <button>Hae julkaisuja</button>
-        </a>
-      </p>
-    </div>
-  </div>
-  <hr />
+  {% include 'header.html' %}
   <h1>Analyysit</h1>
   {% for post in post_list %}
   <p>

@@ -167,3 +167,8 @@ def remove_message(post_id):
         return redirect("/")
     
     return redirect("/")
+
+@app.route("/profile/<int:user_id>", methods=['GET', 'POST'])
+def profile(user_id):
+    if request.method == 'GET':
+        return render_template('profile.html'), post=post)

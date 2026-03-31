@@ -3,9 +3,12 @@
 
 <head>
   <title>Julkaisu</title>
+  <link rel="stylesheet" href="/static/main.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 
 <body>
+  {% include 'header.html' %}
   <h1>{{ post[0].title }}</h1>
   julkaissut <b>{{post[0].username}}</b> | {{post[0].sent_at}}
 

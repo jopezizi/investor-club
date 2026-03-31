@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id ='header'>
+            <h1><span style="color:blue">INVESTOR CLUB</span></h1>
+            {% if session.username %}
+            <p>
+            Olet kirjautunut nimellä {{ session.username }}
+            </p>
+            <p>
+            <a href="/logout"><button>Kirjaudu ulos</button></a> <a href="/register"><button>Luo käyttäjätunnus</button></a>
+            </p>
+            {% else %}
+            <form action="/login" method="post">
+            <p>
+                Tunnus: <br />
+                <input type="text" name="username" />
+            </p>
+            <p>
+                Salasana: <br />
+                <input type="password" name="password" />
+            </p>
+            <input type="submit" value="Kirjaudu" />
+            </form>
+            <p>
+            <a href="/register">
+                <button>Luo uusi käyttäjä</button>
+            </a>
+            </p>
+            {% endif %}
+            <hr>
+            <a href="/"><button>Etusivu</button></a>
+            <a href="/search"><button>Hae julkaisuja</button></a>
+            <a href="/profile/{{ session.user_id }}"><button>Oma profiili</button></a>
+        </div>
+        <hr />
+    </body>
+</html>

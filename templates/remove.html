@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Poista julkaisu</title>
+  <link rel="stylesheet" href="/static/main.css">
+</head>
+<body>
+  {% include 'header.html' %}
   <form action="/remove/{{ post.id }}" method="post">
     <p>
       Haluatko varmasti poistaa julkaisun?
@@ -5,3 +13,5 @@
     <input type="submit" name="continue" value="Jatka" />
     <input type="submit" name="cancel" value="Peruuta" />
   </form>
+</body>
+</html>
