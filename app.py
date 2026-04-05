@@ -10,6 +10,10 @@ app = Flask(__name__)
 app.secret_key = config.secret_key
 
 
+def require_login():
+    if 'user_id' not in session:
+        abort(403)
+
 @app.route("/")
 def index():
     post_list = posts.get_posts()
@@ -73,8 +77,7 @@ def logout():
 
 @app.route('/new_post', methods=['POST'])
 def new_post():
-    if 'user_id' not in session:
-        return redirect('/')
+    require_login()
     
     title = request.form['title']
     content = request.form['content']
@@ -101,12 +104,11 @@ def search():
 
 @app.route("/edit/<int:post_id>", methods=["GET", "POST"])
 def edit_message(post_id):
-    if 'user_id' not in session:
-        return redirect('/login')
+    require_login()
     
     post = posts.get_post(post_id)
     if not post:
-        return redirect('/')
+        abort(404)
     
     if post['user_id'] != session['user_id']:
         abort(403)
@@ -124,12 +126,11 @@ def edit_message(post_id):
 
 @app.route("/remove/<int:post_id>", methods=["GET", "POST"])
 def remove_message(post_id):
-    if 'user_id' not in session:
-        return redirect('/login')
+    require_login()
 
     post = posts.get_post(post_id)
     if not post:
-        return redirect('/')
+        abort(404)
 
     if post['user_id'] != session['user_id']:
         abort(403)
