@@ -8,5 +8,7 @@ fi
 ./.venv/bin/python -m pip install --upgrade pip
 ./.venv/bin/python -m pip install Flask
 
+sqlite3 database.db < schema.sql
+
 export FLASK_APP=app
 ./.venv/bin/flask run

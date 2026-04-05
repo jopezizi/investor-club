@@ -1,53 +1,17 @@
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import sqlite3
+import db
 import posts, users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
-def query(sql, *parameters):
-    with sqlite3.connect('database.db') as db:
-        cursor = db.cursor()
-        cursor.execute(sql, parameters)
-        return cursor.fetchall()
-
-def database_init():
-    with sqlite3.connect('database.db') as db:
-        queries = [('''CREATE TABLE IF NOT EXISTS users (
-               id INTEGER PRIMARY KEY,
-               username TEXT UNIQUE,
-               password_hash TEXT,
-                created_at TEXT)
-              '''),
-              ('''CREATE TABLE IF NOT EXISTS posts (
-               id INTEGER PRIMARY KEY,
-               title TEXT,
-               content TEXT,
-               sent_at TEXT,
-               user_id INTEGER REFERENCES users,
-               likes INTEGER,
-               buys INTEGER,
-               sells INTEGER)
-              '''),
-              ('''CREATE TABLE IF NOT EXISTS comments (
-               id INTEGER PRIMARY KEY,
-               content TEXT,
-               sent_at TEXT,
-               user_id INTEGER REFERENCES users,
-               post_id INTEGER REFERENCES post)
-              ''')
-              ]
-        for q in queries:
-            query(q)
-
-database_init()
 
 @app.route("/")
 def index():
-    print('Sessio:', session)
     post_list = posts.get_posts()
     return render_template("index.html", post_list = post_list)
 
@@ -67,7 +31,7 @@ def login():
     password = request.form.get("password", "")
     
     sql = "SELECT password_hash, id FROM users WHERE username = ?"
-    user_info = query(sql, username)
+    user_info = db.query(sql, [username])
 
     if not user_info:
         return render_template('login.html', error="Väärä tunnus tai salasana")
@@ -93,12 +57,11 @@ def create():
     
     password_hash = generate_password_hash(password1)
 
-    with sqlite3.connect('database.db') as db:
-        try:
-            sql = "INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, datetime('now', 'localtime'))"
-            db.execute(sql, [username, password_hash])
-        except sqlite3.IntegrityError:
-            return render_template('register.html', error="Tunnus on jo varattu")
+    try:
+        sql = "INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, datetime('now', 'localtime'))"
+        db.execute(sql, [username, password_hash])
+    except sqlite3.IntegrityError:
+        return render_template('register.html', error="Tunnus on jo varattu")
 
     return render_template('register.html', error=None, success="Tunnus luotu! Voit kirjautua sisään.")
 
@@ -183,9 +146,10 @@ def remove_message(post_id):
     
     return redirect("/")
 
-@app.route("/profile/<int:user_id>", methods=['GET', 'POST'])
+@app.route("/profile/<int:user_id>")
 def profile(user_id):
     prof = users.get_user(user_id)
-    if request.method == 'GET':
-        return render_template('profile.html', profile=prof)
-    return redirect('/')
+    if not prof:
+        abort(404)
+    posts = users.get_posts(user_id)
+    return render_template('profile.html', profile=prof, posts=posts)

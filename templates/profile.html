@@ -13,5 +13,29 @@
   <p>
     Käyttäjä luotu {{ profile[0]['created_at'] }} ({{ profile[0]['ago'][9:11]|int }} päivää sitten)
   </p>
+  <p>
+    Käyttäjä lähettänyt {{ posts | count }} viestiä
+  </p>
+
+  {% if posts %}
+  <p>
+    Ensimmäinen viesti lähetetty {{posts[-1].sent_at}}
+  </p>
+    <p>
+    Viimeisin viesti lähetetty {{posts[0].sent_at}}
+  </p>
+  {% endif %}
+
+  <ul>
+  {% for post in posts %}
+    <li>
+      <a href="/post/{{post.id}}">"
+        {{ post.title }}
+      </a>
+      <br />
+      ({{ post.sent_at }})
+    </li>
+    
+  </ul>
 </body>
 </html>
