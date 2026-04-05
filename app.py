@@ -86,6 +86,8 @@ def new_post():
 @app.route('/post/<int:post_id>')
 def show_post(post_id):
     post = posts.get_post(post_id)
+    if not post:
+        abort(404)
     comments = posts.get_comments(post_id)
     return render_template('post.html', post=post, comments=comments)
 
@@ -102,14 +104,12 @@ def edit_message(post_id):
     if 'user_id' not in session:
         return redirect('/login')
     
-    to_edit = posts.get_post(post_id)
-    if isinstance(to_edit, list) and to_edit:
-        post = to_edit[0]
-    else:
+    post = posts.get_post(post_id)
+    if not post:
         return redirect('/')
     
     if post['user_id'] != session['user_id']:
-        return redirect(f"/post/{post_id}")
+        abort(403)
     
     if request.method == "GET":
         return render_template("edit.html", post=post)
@@ -127,14 +127,12 @@ def remove_message(post_id):
     if 'user_id' not in session:
         return redirect('/login')
 
-    to_remove = posts.get_post(post_id)
-    if isinstance(to_remove, list) and to_remove:
-        post = to_remove[0]
-    else:
+    post = posts.get_post(post_id)
+    if not post:
         return redirect('/')
 
     if post['user_id'] != session['user_id']:
-        return redirect(f"/post/{post_id}")
+        abort(403)
     
     if request.method == "GET":
         return render_template("remove.html", post=post)
@@ -153,3 +151,7 @@ def profile(user_id):
         abort(404)
     posts = users.get_posts(user_id)
     return render_template('profile.html', profile=prof, posts=posts)
+
+@app.route("/add_profile_picture", methods = ["GET", "POST"])
+def add_profile_picture():
+    return redirect("/")

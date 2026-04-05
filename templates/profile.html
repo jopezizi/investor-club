@@ -9,9 +9,9 @@
 
 <body>
   {% include 'header.html' %}
-  <h1>{{ profile[0]['username'] }}</h1>
+  <h1>{{ profile.username }}</h1>
   <p>
-    Käyttäjä luotu {{ profile[0]['created_at'] }} ({{ profile[0]['ago'][9:11]|int }} päivää sitten)
+    Käyttäjä luotu {{ profile.created_at }} ({{ profile.ago[9:11]|int }} päivää sitten)
   </p>
   <p>
     Käyttäjä lähettänyt {{ posts | count }} viestiä
@@ -29,13 +29,13 @@
   <ul>
   {% for post in posts %}
     <li>
-      <a href="/post/{{post.id}}">"
+      <a href="/post/{{post.id}}">
         {{ post.title }}
       </a>
       <br />
       ({{ post.sent_at }})
     </li>
-    
+  {% endfor %}
   </ul>
 </body>
 </html>

@@ -6,8 +6,7 @@ def get_posts():
             JOIN users u ON P.user_id = u.id
             ORDER BY p.id DESC
             '''
-    rows = db.query(sql)
-    return [{"id": row["id"], "title": row["title"], "sent_at": row["sent_at"], "user_id": row["user_id"], "username": row["username"], "likes": row["likes"], "buys": row["buys"], "sells": row["sells"]} for row in rows]
+    return db.query(sql)
 
 
 def add_post(title, content, user_id):
@@ -23,23 +22,15 @@ def get_post(post_id):
             JOIN users u ON p.user_id = u.id
             WHERE p.id = ?
             '''
-    rows = db.query(sql, [post_id])
-    if rows:
-        row = rows[0]
-        return [{'id': row['id'], 'title': row['title'], 'content': row['content'], 'sent_at': row['sent_at'], 'user_id': row['user_id'], 'username': row['username'], 'likes': row['likes'], 'buys': row['buys'], 'sells': row['sells']}]
-    else:
-        return 'Post not found'
+    result = db.query(sql, [post_id])
+    return result[0] if result else None
 
 def get_comments(post_id):
     sql = '''SELECT c.id, c.content, c.sent_at, c.user_id, c.post_id
             FROM comments c
             WHERE c.post_id = ?
         '''
-    rows = db.query(sql, [post_id])
-    if rows:
-        return [{'id': row['id'], 'content': row['content'], 'sent_at': row['sent_at'], 'user_id': row['user_id'], 'post_id': row['post_id']} for row in rows]
-    else:
-        return 'No comments'
+    return db.query(sql, [post_id])
     
 
 def search(query):

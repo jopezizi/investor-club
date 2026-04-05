@@ -6,12 +6,8 @@ def get_user(user_id):
             FROM users u
             WHERE u.id = ?
             '''
-    rows = db.query(sql, [user_id])
-    if rows:
-        row = rows[0]
-        return [{'id': row['id'], 'username': row['username'], 'created_at': row['created_at'], 'ago': row['ago']}]
-    else:
-        return 'User not found'
+    result = db.query(sql, [user_id])
+    return result[0] if result else None
 
 def get_posts(user_id):
     sql = '''SELECT p.id, p.title, p.content, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.likes, p.buys, p.sells

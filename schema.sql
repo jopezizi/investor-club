@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS users (
                id INTEGER PRIMARY KEY,
                username TEXT UNIQUE,
                password_hash TEXT,
-                created_at TEXT
+                created_at TEXT,
+                image BLOB
 );
 CREATE TABLE IF NOT EXISTS posts (
                id INTEGER PRIMARY KEY,

@@ -9,18 +9,18 @@
 
 <body>
   {% include 'header.html' %}
-  <h1>{{ post[0].title }}</h1>
-  julkaissut <b>{{post[0].username}}</b> | {{post[0].sent_at}}
+  <h1>{{ post.title }}</h1>
+  julkaissut <b>{{ post.username }}</b> | {{ post.sent_at }}
 
-  {%if post[0].user_id == session.user_id %}
+  {%if post.user_id == session.user_id %}
   <p>
-    <a href="/edit/{{ post[0].id }}">Muokkaa</a> |
-    <a href="/remove/{{ post[0].id }}">Poista</a>
+    <a href="/edit/{{ post.id }}">Muokkaa</a> |
+    <a href="/remove/{{ post.id }}">Poista</a>
   </p>
   {% endif %}
     <hr>
   <p>
-    {{ post[0].content}}
+    {{ post.content }}
   </p>
 </body>
 </html>
