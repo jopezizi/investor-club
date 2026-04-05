@@ -47,15 +47,22 @@ database_init()
 
 @app.route("/")
 def index():
+    print('Sessio:', session)
     post_list = posts.get_posts()
     return render_template("index.html", post_list = post_list)
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    if request.method == 'GET':
+        return render_template('register.html', error=None)
 
-@app.route("/login", methods=["POST"])
+    return redirect('/register')
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "GET":
+        return render_template('login.html', error=None)
+    
     username = request.form.get("username", "")
     password = request.form.get("password", "")
     
@@ -63,13 +70,7 @@ def login():
     user_info = query(sql, username)
 
     if not user_info:
-        return '''VIRHE: väärä tunnus tai salasana
-        <p>
-        <a href='/'>
-            <button>Takaisin etusivulle</button>
-        </a>
-        </p>
-        '''
+        return render_template('login.html', error="Väärä tunnus tai salasana")
     
     password_hash = user_info[0][0]
     user_id = user_info[0][1]
@@ -79,15 +80,17 @@ def login():
         session["user_id"] = user_id
         return redirect("/")
     else:
-        return "VIRHE: väärä tunnus tai salasana"
+        return render_template('login.html', error="Väärä tunnus tai salasana")
 
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
+    
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+        return render_template('register.html', error="Salasanat eivät ole samat")
+    
     password_hash = generate_password_hash(password1)
 
     with sqlite3.connect('database.db') as db:
@@ -95,14 +98,9 @@ def create():
             sql = "INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, datetime('now', 'localtime'))"
             db.execute(sql, [username, password_hash])
         except sqlite3.IntegrityError:
-            return "VIRHE: tunnus on jo varattu"
+            return render_template('register.html', error="Tunnus on jo varattu")
 
-    return '''Tunnus luotu. Voit kirjautua sisään etusivulla.
-            <p>
-        <a href='/'>
-            <button>Takaisin etusivulle</button>
-        </a>
-        </p>'''
+    return render_template('register.html', error=None, success="Tunnus luotu! Voit kirjautua sisään.")
 
 @app.route("/logout")
 def logout():
@@ -138,9 +136,17 @@ def search():
 
 @app.route("/edit/<int:post_id>", methods=["GET", "POST"])
 def edit_message(post_id):
+    if 'user_id' not in session:
+        return redirect('/login')
+    
     to_edit = posts.get_post(post_id)
     if isinstance(to_edit, list) and to_edit:
         post = to_edit[0]
+    else:
+        return redirect('/')
+    
+    if post['user_id'] != session['user_id']:
+        return redirect(f"/post/{post_id}")
     
     if request.method == "GET":
         return render_template("edit.html", post=post)
@@ -151,14 +157,22 @@ def edit_message(post_id):
         posts.update_post(post["id"], title, content)
         return redirect("/post/" + str(post["id"]))
 
-    return redirect("/")
+    return redirect('/')
 
 @app.route("/remove/<int:post_id>", methods=["GET", "POST"])
 def remove_message(post_id):
+    if 'user_id' not in session:
+        return redirect('/login')
+
     to_remove = posts.get_post(post_id)
     if isinstance(to_remove, list) and to_remove:
         post = to_remove[0]
+    else:
+        return redirect('/')
 
+    if post['user_id'] != session['user_id']:
+        return redirect(f"/post/{post_id}")
+    
     if request.method == "GET":
         return render_template("remove.html", post=post)
     
