@@ -23,11 +23,11 @@
   <form action='/new_post' method='post'>
     <p>
       Otsikko: <br />
-      <input type="text" name="title" minlength="3" maxlength="100"/>
+      <input type="text" name="title" required maxlength="100"/>
     </p>
     <p>
       Viesti: <br />
-      <textarea name="content" rows="5" cols="40" minlength="3" maxlength="3000"></textarea>
+      <textarea name="content" rows="5" cols="40" required maxlength="5000"></textarea>
     </p>
     <input type="submit" value="Lähetä" />
     </p>

@@ -79,10 +79,16 @@ def logout():
 def new_post():
     require_login()
     
+    if not users.get_user(session['user_id']):
+        session.pop('username', None)
+        session.pop('user_id', None)
+        return redirect('/login')
+    
     title = request.form['title']
     content = request.form['content']
+    if not title or not content or len(title) > 100 or len(content) > 5000:
+        abort(403)
     user_id = session['user_id']
-
     post_id = posts.add_post(title, content, user_id)
     return redirect('/post/' + str(post_id))
 
@@ -106,6 +112,11 @@ def search():
 def edit_message(post_id):
     require_login()
     
+    if not users.get_user(session['user_id']):
+        session.pop('username', None)
+        session.pop('user_id', None)
+        return redirect('/login')
+    
     post = posts.get_post(post_id)
     if not post:
         abort(404)
@@ -128,6 +139,11 @@ def edit_message(post_id):
 def remove_message(post_id):
     require_login()
 
+    if not users.get_user(session['user_id']):
+        session.pop('username', None)
+        session.pop('user_id', None)
+        return redirect('/login')
+    
     post = posts.get_post(post_id)
     if not post:
         abort(404)

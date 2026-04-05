@@ -1,7 +1,7 @@
 import db
 
 def get_posts():
-    sql = '''SELECT p.id, p.title, p.sent_at, p.user_id, u.username, p.likes, p.buys, p.sells
+    sql = '''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells
             FROM posts p
             JOIN users u ON P.user_id = u.id
             ORDER BY p.id DESC
