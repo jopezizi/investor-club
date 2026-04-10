@@ -7,7 +7,7 @@ Sijoitusalusta, jossa käyttäjät voivat julkaista ja kommentoida osakevalintoj
 - Käyttäjä pystyy muokkaamaan ja poistamaan analyysejään.
 - Käyttäjä pystyy etsimään listauksia hakusanalla (esim. yrityksen nimellä)
 - Käyttäjä näkee listauksen kaikista muista analyysesistä.
-- Analyysille voi valita luokittelun: toimiala, markkina & strategia.
+- Analyysille voi valita luokittelun: toimiala, markkina & strategia. Analyysejä voi selata luokittain.
 - Muiden analyyseistä voi tykätä ja äänestää 'Osta tai Myy'.
 
 # ASENNUSOHJEET
