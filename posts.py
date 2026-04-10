@@ -125,3 +125,26 @@ def get_classes():
 def get_category_items(category):
     sql = 'SELECT class, name, id FROM categories WHERE class = ? ORDER BY name'
     return db.query(sql, [category])
+
+def get_category_info(id):
+    sql = 'SELECT class, name FROM categories WHERE id = ?'
+    return db.query(sql, [id])
+
+
+def get_posts_by_category(cat_class, category):
+    if cat_class == 'Markkina':
+        where = 'p.market = ?'
+    elif cat_class == 'Toimiala':
+        where = 'p.industry = ?'
+    elif cat_class == 'Strategia':
+        where = 'p.strategy = ?'
+    else:
+        return []
+
+    sql = f'''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation
+            FROM posts p
+            JOIN users u ON p.user_id = u.id
+            WHERE {where}
+            ORDER BY p.likes DESC
+            '''
+    return db.query(sql, [category])

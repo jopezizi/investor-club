@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{category}}</title>
+  <link rel="stylesheet" href="/static/main.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+
+<body>
+  {% include 'header.html' %}
+  <h1>{{category}}</h1>
+  {% if post_list %}
+  {% for post in post_list %}
+  <p>
+    <h3><a href='/post/{{ post.id }}'>{{post.title}}</a></h3><a href='/profile/{{post.user_id}}'>{{post.username}}</a> | {{post.recommendation}} | {{post.likes}} tykkäystä | {{post.sent_at}} | {{post.market}} | {{post.industry}} | {{post.strategy}}
+    <br />
+  </p>
+  <hr />
+  {% endfor %}
+  {% else %}
+  Ei julkaisuja vielä.
+ {% endif %}
+
+</body>
+
+</html>

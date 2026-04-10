@@ -254,6 +254,13 @@ def categories():
         items = posts.get_category_items(classes[i][0])
         for cat in items:
             categories[i].append(cat)
-    print(categories)
     if request.method == 'GET':
         return render_template('categories.html', classes = classes, categories = categories)
+    
+@app.route('/categories/<int:category_id>', methods=['GET', 'POST'])
+def show_category(category_id):
+    if request.method == 'GET':
+        info = posts.get_category_info(category_id)[0]
+        class_name, cat_name = info[0], info[1]
+        post_list = posts.get_posts_by_category(class_name, cat_name)
+        return render_template('show_category.html', category = cat_name, post_list = post_list)
