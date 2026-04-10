@@ -12,26 +12,15 @@
   <h1>Analyysit</h1>
   {% for post in post_list %}
   <p>
-    <a href='/post/{{ post.id }}'>{{post.title}}</a> | {{post.username}} | {{post.sent_at}}
+    <a href='/post/{{ post.id }}'>{{post.title}}</a> | <a href='/profile/{{post.user_id}}'>{{post.username}}</a> | {{post.sent_at}} | {{post.market}} | {{post.industry}} | {{post.strategy}}
     <br />
   </p>
   <hr />
   {% endfor %}
   {% if session.username %}
-  <h1>Uusi analyysi</h1>
 
-  <form action='/new_post' method='post'>
-    <p>
-      Otsikko: <br />
-      <input type="text" name="title" required maxlength="100"/>
-    </p>
-    <p>
-      Viesti: <br />
-      <textarea name="content" rows="5" cols="40" required maxlength="5000"></textarea>
-    </p>
-    <input type="submit" value="Lähetä" />
-    </p>
-  </form>
+  {% include 'new_post.html'%}
+
  {% endif %}
 
 </body>

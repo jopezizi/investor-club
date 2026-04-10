@@ -85,10 +85,16 @@ def new_post():
     
     title = request.form['title']
     content = request.form['content']
+    market = request.form['market']
+    industry = request.form['industry']
+    strategy = request.form['strategy']
+    print(market)
+    print(industry)
+    print(strategy)
     if not title or not content or len(title) > 100 or len(content) > 5000:
         abort(403)
     user_id = session['user_id']
-    post_id = posts.add_post(title, content, user_id)
+    post_id = posts.add_post(title, content, user_id, market, industry, strategy)
     return redirect('/post/' + str(post_id))
 
 @app.route('/post/<int:post_id>')

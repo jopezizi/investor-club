@@ -1,0 +1,51 @@
+  <h1>Uusi analyysi</h1>
+
+  <form action='/new_post' method='post'>
+    <p>
+      Otsikko: <br />
+      <input type="text" name="title" required maxlength="100"/>
+    </p>
+    <p>
+      Viesti: <br />
+      <textarea name="content" rows="5" cols="40" required maxlength="5000"></textarea>
+    </p>
+    <p>
+        Päämarkkina (valitse yksi):
+        <select name="market" required>
+            <option value="OMX Helsinki">OMX Helsinki</option>
+            <option value="OMX Stockholm">OMX Stockholm</option>
+            <option value="NYSE / NASDAQ">NYSE / NASDAQ</option>
+            <option value="DAX">DAX</option>
+            <option value="Kehittyvät markkinat">Kehittyvät markkinat</option>
+            <option value="Kryptomarkkinat">Kryptomarkkinat</option>
+        </select>
+    </p>
+    <p>
+        <fieldset>
+            <legend>Toimialat</legend>
+
+            <label><input type="checkbox" name="industry" value="Teknologia"> Teknologia</label><br>
+            <label><input type="checkbox" name="industry" value="Rahoitus"> Rahoitus</label><br>
+            <label><input type="checkbox" name="industry" value="Terveydenhuolto"> Terveydenhuolto</label><br>
+            <label><input type="checkbox" name="industry" value="Teollisuus"> Teollisuus</label><br>
+            <label><input type="checkbox" name="industry" value="Kulutustavarat"> Kulutustavarat</label><br>
+            <label><input type="checkbox" name="industry" value="Energia"> Energia</label><br>
+            <label><input type="checkbox" name="industry" value="Kiinteistot"> Kiinteistöt</label><br>
+        </fieldset>
+    </p>
+    <p>
+        <fieldset>
+            <legend>Sijoitusstrategia</legend>
+
+            <label><input type="checkbox" name="strategy" value="Arvosijoittaminen"> Arvosijoittaminen</label><br>
+            <label><input type="checkbox" name="strategy" value="Kasvusijoittaminen"> Kasvusijoittaminen</label><br>
+            <label><input type="checkbox" name="strategy" value="Osinkosijoittaminen"> Osinkosijoittaminen</label><br>
+            <label><input type="checkbox" name="strategy" value="Indeksisijoittaminen"> Indeksisijoittaminen</label><br>
+            <label><input type="checkbox" name="strategy" value="Laatusijoittaminen"> Laatusijoittaminen</label><br>
+            <label><input type="checkbox" name="strategy" value="Käänneyhtiö"> Käänneyhtiö</label><br>
+            <label><input type="checkbox" name="strategy" value="Vastuullisuus">Vastuullisuus / ESG</label><br>
+        </fieldset>
+    </p>
+    <input type="submit" value="Lähetä" />
+    </p>
+  </form>
