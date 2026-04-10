@@ -17,7 +17,7 @@ def add_post(title, content, user_id, market, industry, strategy, recommendation
     return db.last_insert_id()
     
 def get_post(post_id):
-    sql = '''SELECT p.id, p.title, p.content, p.sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation
+    sql = '''SELECT p.id, p.title, p.content, p.sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.holds
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE p.id = ?
@@ -66,3 +66,41 @@ def delete_like(user_id, post_id):
     db.execute(sql, [user_id, post_id])
     sql = 'UPDATE posts SET likes = likes - 1 WHERE id = ? AND likes > 0'
     db.execute(sql, [post_id] )
+
+def get_user_recommended(user_id, post_id):
+    sql = 'SELECT recommendation FROM recommendations WHERE user_id = ? AND post_id = ?'
+    return db.query(sql, [user_id, post_id])
+
+def update_recommendation(user_id, post_id, recommended, recommendation):
+    old_recommendation = recommended[0]['recommendation'] if recommended else None
+
+    if recommendation == old_recommendation:
+        return
+
+    if old_recommendation is None:
+        sql = 'INSERT INTO recommendations (user_id, post_id, recommendation) VALUES (?, ?, ?)'
+        db.execute(sql, [user_id, post_id, recommendation])
+    else:
+        sql = 'UPDATE recommendations SET recommendation = ? WHERE user_id = ? AND post_id = ?'
+        db.execute(sql, [recommendation, user_id, post_id])
+
+    buy = 0
+    hold = 0
+    sell = 0
+
+    if old_recommendation == 'buy':
+        buy -= 1
+    elif old_recommendation == 'sell':
+        sell -= 1
+    elif old_recommendation == 'hold':
+        hold -= 1
+
+    if recommendation == 'buy':
+        buy += 1
+    elif recommendation == 'sell':
+        sell +=1
+    elif recommendation == 'hold':
+        hold += 1
+
+    sql = 'UPDATE posts SET buys = buys + ?, holds = holds + ?, sells = sells + ? WHERE id = ?'
+    db.execute(sql, [buy, hold, sell, post_id])

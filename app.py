@@ -105,7 +105,7 @@ def create_post():
 def show_post(post_id):
     post = posts.get_post(post_id)
     liked = False
-    if session['username']:
+    if 'user_id' in session:
         user_id = session['user_id']
         liked = bool(posts.get_user_liked(user_id, post_id))
     if not post:
@@ -232,3 +232,12 @@ def toggle_like(post_id):
         liked = True
     return redirect('/post/' + str(post_id))
     
+
+@app.route('/post/<int:post_id>/update-recommendation', methods=['POST'])
+def update_recommendation(post_id):
+    require_login()
+    user_id = session['user_id']
+    recommended = posts.get_user_recommended(user_id, post_id)
+    recommendation = request.form['recommendation']
+    posts.update_recommendation(user_id, post_id, recommended, recommendation)
+    return redirect('/post/' + str(post_id))

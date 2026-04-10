@@ -38,3 +38,11 @@ CREATE TABLE IF NOT EXISTS user_likes (
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS recommendations (
+    user_id INTEGER NOT NULL,
+    post_id INTEGER NOT NULL,
+    recommendation TEXT NOT NULL,
+    PRIMARY KEY (user_id, post_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+);

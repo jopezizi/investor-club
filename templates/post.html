@@ -12,6 +12,9 @@
   <h1>{{ post.title }}</h1>
   <h3>{{ post.recommendation }}</h3>
   <h3>{{ post.likes }} tykkäystä</h3>
+  <h3>{{ post.buys }} sanoo Osta</h3>
+  <h3>{{ post.holds }} sanoo Pidä</h3>
+  <h3>{{ post.sells }} sanoo Myy</h3>
   <h3>
       <form action="/post/{{post.id}}/toggle-like" method="post">
         {% if liked %}
@@ -21,7 +24,22 @@
         {% endif %}
   </form>
   </h3>
+  <p>
+    <form action="/post/{{post.id}}/update-recommendation" method ="post">
+      <fieldset>
+          <legend>Suosituksesi</legend>
 
+          <input type="radio" id="buy" onchange="this.form.submit()" name="recommendation" value="buy" />
+          <label for="buy">Osta</label><br />
+
+          <input type="radio" id="hold" onchange="this.form.submit()" name="recommendation" value="hold" />
+          <label for="hold">Pidä</label><br />
+
+          <input type="radio" id="sell" onchange="this.form.submit()" name="recommendation" value="sell" />
+          <label for="sell">Myy</label>
+      </fieldset>
+      </form>
+  </p>
   julkaissut <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b> | {{ post.sent_at }}
 
   {%if post.user_id == session.user_id %}
