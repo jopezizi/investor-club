@@ -10,6 +10,23 @@
 <body>
   {% include 'header.html' %}
   <h1>{{ profile.username }}</h1>
+
+  {%if profile.id == session.user_id %}
+  {% if profile.has_image %}
+  <img src="/pfp/{{profile.id}}" width="200" height="200"/>
+  <p>
+  <h3><a href="/add_profile_picture">Muokkaa profiilikuvaa</a> | 
+  <a href="/delete_profile_picture">Poista profiilikuva</a></h3>
+  </p>
+  {% else %}
+  <p>
+    <h3><a href="/add_profile_picture">Lisää profiilikuva</a></h3>
+  </p>
+  {% endif %}
+  
+  {% endif %}
+
+
   <p>
     Käyttäjä luotu {{ profile.created_at }} ({{ profile.ago[9:11]|int }} päivää sitten)
   </p>
@@ -25,7 +42,7 @@
     Viimeisin viesti lähetetty {{posts[0].sent_at}}
   </p>
   {% endif %}
-
+  <h3>Käyttäjän julkaisut</h3>
   <ul>
   {% for post in posts %}
     <li>

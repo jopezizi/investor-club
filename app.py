@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import abort, redirect, render_template, request, session
+from flask import *
 from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import sqlite3
@@ -171,4 +170,38 @@ def profile(user_id):
 
 @app.route("/add_profile_picture", methods = ["GET", "POST"])
 def add_profile_picture():
-    return redirect("/")
+    require_login()
+
+    if request.method == 'GET':
+        return render_template('add_profile_picture.html', error = None)
+    
+    if request.method == 'POST':
+        file = request.files['image']
+        if not file.filename.endswith('.jpg'):
+            return render_template('add_profile_picture.html', error = "väärä tiedostomuoto")
+
+        image = file.read()
+        if len(image) > 400 * 1024:
+            return render_template('add_profile_picture.html', error = "liian suuri kuva")
+
+        user_id = session['user_id']
+        users.update_profile_picture(user_id, image)
+        return redirect('/profile/'+str(user_id))        
+    return redirect('/')
+
+@app.route("/delete_profile_picture")
+def delete_profile_picture():
+    require_login()
+
+    user_id = session['user_id']
+    users.delete_profile_picture(user_id)
+    return redirect('/profile/' + str(user_id))
+
+@app.route('/pfp/<int:user_id>')
+def show_image(user_id):
+    pfp = users.get_profile_picture(user_id)
+    if not pfp:
+        abort(404)
+    response = make_response(bytes(pfp[0]))
+    response.headers.set('Content-Type', 'image/jpeg')
+    return response
