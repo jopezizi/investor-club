@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS posts (
                user_id INTEGER REFERENCES users,
                likes INTEGER,
                buys INTEGER,
-               sells INTEGER
+               sells INTEGER,
+               recommendation TEXT
 );
 CREATE TABLE IF NOT EXISTS comments (
                id INTEGER PRIMARY KEY,

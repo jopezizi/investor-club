@@ -10,6 +10,7 @@
 <body>
   {% include 'header.html' %}
   <h1>{{ post.title }}</h1>
+  <h3>{{ post.recommendation }}</h3>
   julkaissut <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b> | {{ post.sent_at }}
 
   {%if post.user_id == session.user_id %}

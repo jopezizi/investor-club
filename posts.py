@@ -1,7 +1,7 @@
 import db
 
 def get_posts():
-    sql = '''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy
+    sql = '''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation
             FROM posts p
             JOIN users u ON P.user_id = u.id
             ORDER BY p.id DESC
@@ -9,15 +9,15 @@ def get_posts():
     return db.query(sql)
 
 
-def add_post(title, content, user_id, market, industry, strategy):
+def add_post(title, content, user_id, market, industry, strategy, recommendation):
     sql = '''
-        INSERT INTO posts (title, content, sent_at, user_id, market, industry, strategy) VALUES(?, ?, datetime('now', 'localtime'), ?, ?, ?, ?)
+        INSERT INTO posts (title, content, sent_at, user_id, market, industry, strategy, recommendation) VALUES(?, ?, datetime('now', 'localtime'), ?, ?, ?, ?, ?)
         '''
-    db.execute(sql, [title, content, user_id, market, industry, strategy])
+    db.execute(sql, [title, content, user_id, market, industry, strategy, recommendation])
     return db.last_insert_id()
     
 def get_post(post_id):
-    sql = '''SELECT p.id, p.title, p.content, p.sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy
+    sql = '''SELECT p.id, p.title, p.content, p.sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE p.id = ?
