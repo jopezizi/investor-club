@@ -74,8 +74,14 @@ def logout():
     session.pop("user_id", None)
     return redirect("/")
 
-@app.route('/new_post', methods=['POST'])
+@app.route('/new_post')
 def new_post():
+    require_login()
+
+    return render_template('new_post.html')
+
+@app.route('/create_post', methods=['POST'])
+def create_post():
     require_login()
     
     if not users.get_user(session['user_id']):

@@ -10,7 +10,7 @@
 <body>
   {% include 'header.html' %}
   <h1>{{ post.title }}</h1>
-  julkaissut <b>{{ post.username }}</b> | {{ post.sent_at }}
+  julkaissut <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b> | {{ post.sent_at }}
 
   {%if post.user_id == session.user_id %}
   <p>
@@ -19,6 +19,9 @@
   </p>
   {% endif %}
     <hr>
+  <p>
+    <i>{{post.market}}</i> | <i>{{post.industry}}</i> | <i>{{post.strategy}}</i>
+  </p>
   <p>
     {{ post.content }}
   </p>

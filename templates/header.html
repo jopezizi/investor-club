@@ -18,6 +18,9 @@
             {% endif %}
             <hr>
             <a href="/"><button>Etusivu</button></a>
+            {% if session.username %}
+            <a href="/new_post"><button>Uusi julkaisu</button></a>
+            {% endif %}
             <a href="/search"><button>Hae julkaisuja</button></a>
             {% if session.username %}
             <a href="/profile/{{ session.user_id }}"><button>Oma profiili</button></a>

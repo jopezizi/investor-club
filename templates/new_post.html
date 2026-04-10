@@ -1,6 +1,18 @@
-  <h1>Uusi analyysi</h1>
+<!DOCTYPE html>
+<html>
 
-  <form action='/new_post' method='post'>
+<head>
+  <title>Uusi julkaisu</title>
+  <link rel="stylesheet" href="/static/main.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+  
+<body>
+{% include 'header.html' %}
+
+  <h1>Uusi julkaisu</h1>
+
+  <form action='/create_post' method='post'>
     <p>
       Otsikko: <br />
       <input type="text" name="title" required maxlength="100"/>
@@ -49,3 +61,6 @@
     <input type="submit" value="Lähetä" />
     </p>
   </form>
+
+</body>
+</html>
