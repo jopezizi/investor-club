@@ -77,13 +77,6 @@ def update_recommendation(user_id, post_id, recommended, recommendation):
     if recommendation == old_recommendation:
         return
 
-    if old_recommendation is None:
-        sql = 'INSERT INTO recommendations (user_id, post_id, recommendation) VALUES (?, ?, ?)'
-        db.execute(sql, [user_id, post_id, recommendation])
-    else:
-        sql = 'UPDATE recommendations SET recommendation = ? WHERE user_id = ? AND post_id = ?'
-        db.execute(sql, [recommendation, user_id, post_id])
-
     buy = 0
     hold = 0
     sell = 0
@@ -95,6 +88,24 @@ def update_recommendation(user_id, post_id, recommended, recommendation):
     elif old_recommendation == 'hold':
         hold -= 1
 
+    if recommendation == 'clear':
+        if old_recommendation is not None:
+            sql = 'DELETE FROM recommendations WHERE user_id = ? AND post_id = ?'
+            db.execute(sql, [user_id, post_id])
+        sql = 'UPDATE posts SET buys = buys + ?, holds = holds + ?, sells = sells + ? WHERE id = ?'
+        db.execute(sql, [buy, hold, sell, post_id])
+        return
+    
+    if old_recommendation is None:
+        sql = 'INSERT INTO recommendations (user_id, post_id, recommendation) VALUES (?, ?, ?)'
+        db.execute(sql, [user_id, post_id, recommendation])
+    else:
+        sql = 'UPDATE recommendations SET recommendation = ? WHERE user_id = ? AND post_id = ?'
+        db.execute(sql, [recommendation, user_id, post_id])
+
+
+
+    
     if recommendation == 'buy':
         buy += 1
     elif recommendation == 'sell':

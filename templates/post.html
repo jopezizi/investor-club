@@ -24,6 +24,7 @@
         {% endif %}
   </form>
   </h3>
+  {% if post.user_id != session.user_id %}
   <p>
     <form action="/post/{{post.id}}/update-recommendation" method ="post">
       <fieldset>
@@ -37,9 +38,14 @@
 
           <input type="radio" id="sell" onchange="this.form.submit()" name="recommendation" value="sell" />
           <label for="sell">Myy</label>
+          <br>
+            {% if current_recommendation %}
+            <button type="submit" name="recommendation" value="clear">Poista valinta</button>
+            {% endif %}
       </fieldset>
       </form>
   </p>
+  {% endif %}
   julkaissut <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b> | {{ post.sent_at }}
 
   {%if post.user_id == session.user_id %}

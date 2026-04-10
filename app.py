@@ -105,13 +105,16 @@ def create_post():
 def show_post(post_id):
     post = posts.get_post(post_id)
     liked = False
+    current_recommendation = None
     if 'user_id' in session:
         user_id = session['user_id']
         liked = bool(posts.get_user_liked(user_id, post_id))
+        recommended = posts.get_user_recommended(user_id, post_id)
+        current_recommendation = recommended[0]['recommendation'] if recommended else None
     if not post:
         abort(404)
     comments = posts.get_comments(post_id)
-    return render_template('post.html', post=post, comments=comments, liked=liked)
+    return render_template('post.html', post=post, comments=comments, liked=liked, current_recommendation=current_recommendation)
 
 
 @app.route('/search')
