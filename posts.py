@@ -115,3 +115,13 @@ def update_recommendation(user_id, post_id, recommended, recommendation):
 
     sql = 'UPDATE posts SET buys = buys + ?, holds = holds + ?, sells = sells + ? WHERE id = ?'
     db.execute(sql, [buy, hold, sell, post_id])
+
+
+def get_classes():
+    sql = 'SELECT DISTINCT class FROM categories ORDER BY class'
+    result = db.query(sql)
+    return result if result else None
+
+def get_category_items(category):
+    sql = 'SELECT class, name, id FROM categories WHERE class = ? ORDER BY name'
+    return db.query(sql, [category])

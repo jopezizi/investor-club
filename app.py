@@ -244,3 +244,16 @@ def update_recommendation(post_id):
     recommendation = request.form['recommendation']
     posts.update_recommendation(user_id, post_id, recommended, recommendation)
     return redirect('/post/' + str(post_id))
+
+@app.route('/categories', methods = ['GET'])
+def categories():
+    classes = posts.get_classes()
+    categories = []
+    for i in range(len(classes)):
+        categories.append([])
+        items = posts.get_category_items(classes[i][0])
+        for cat in items:
+            categories[i].append(cat)
+    print(categories)
+    if request.method == 'GET':
+        return render_template('categories.html', classes = classes, categories = categories)

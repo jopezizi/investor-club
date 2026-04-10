@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kategoriat</title>
+  <link rel="stylesheet" href="/static/main.css">
+</head>
+<body>
+  {% include 'header.html' %}
+  <h1>Kategoriat</h1>
+  {% for i in range (classes | length) %}
+  <p>
+    <h3>{{ classes[i][0] }}</h3>
+    <ul>
+        {% for category in categories[i] %}
+        <li><a href = "/categories/{{category[2]}}">{{ category[1] }}</li></a>
+        {% endfor %}
+    </ul>
+  </p>
+  {% endfor %}
+</body>
+</html>
