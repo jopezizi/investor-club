@@ -104,17 +104,20 @@ def create_post():
 @app.route('/post/<int:post_id>')
 def show_post(post_id):
     post = posts.get_post(post_id)
+    liked = False
+    if session['username']:
+        user_id = session['user_id']
+        liked = bool(posts.get_user_liked(user_id, post_id))
     if not post:
         abort(404)
     comments = posts.get_comments(post_id)
-    return render_template('post.html', post=post, comments=comments)
+    return render_template('post.html', post=post, comments=comments, liked=liked)
 
 
 @app.route('/search')
 def search():
     query = request.args.get('query')
     results = posts.search(query) if query else []
-    print(results)
     return render_template('search.html', query=query, results=results)
 
 @app.route("/edit/<int:post_id>", methods=["GET", "POST"])
@@ -215,3 +218,17 @@ def show_image(user_id):
     response = make_response(bytes(pfp[0]))
     response.headers.set('Content-Type', 'image/jpeg')
     return response
+
+@app.route('/post/<int:post_id>/toggle-like', methods=['POST'])
+def toggle_like(post_id):
+    require_login()
+    user_id = session['user_id']
+    liked = posts.get_user_liked(user_id, post_id)
+    if liked:
+        posts.delete_like(user_id, post_id)
+        liked = False
+    else:
+        posts.add_like(user_id, post_id)
+        liked = True
+    return redirect('/post/' + str(post_id))
+    

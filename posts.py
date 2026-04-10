@@ -23,7 +23,6 @@ def get_post(post_id):
             WHERE p.id = ?
             '''
     result = db.query(sql, [post_id])
-    print(result[0])
     return result[0] if result else None
 
 def get_comments(post_id):
@@ -51,3 +50,19 @@ def update_post(post_id, title, content):
 def remove_post(post_id):
     sql = "DELETE FROM posts WHERE id = ?"
     db.execute(sql, [post_id])
+
+def get_user_liked(user_id, post_id):
+    sql = 'SELECT 1 FROM user_likes WHERE user_id = ? AND post_id = ?'
+    return db.query(sql, [user_id, post_id])
+
+def add_like(user_id, post_id):
+    sql = 'INSERT INTO user_likes (user_id, post_id) VALUES (?,?)'
+    db.execute(sql, [user_id, post_id])
+    sql = 'UPDATE posts SET likes = likes + 1 WHERE id = ?'
+    db.execute(sql, [post_id] )
+
+def delete_like(user_id, post_id):
+    sql = 'DELETE FROM user_likes WHERE user_id = ? AND post_id = ?'
+    db.execute(sql, [user_id, post_id])
+    sql = 'UPDATE posts SET likes = likes - 1 WHERE id = ? AND likes > 0'
+    db.execute(sql, [post_id] )

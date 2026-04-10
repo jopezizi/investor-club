@@ -11,6 +11,17 @@
   {% include 'header.html' %}
   <h1>{{ post.title }}</h1>
   <h3>{{ post.recommendation }}</h3>
+  <h3>{{ post.likes }} tykkäystä</h3>
+  <h3>
+      <form action="/post/{{post.id}}/toggle-like" method="post">
+        {% if liked %}
+        <button>Poista tykkäys</button>
+        {% else %}
+        <button>Tykkää</button>
+        {% endif %}
+  </form>
+  </h3>
+
   julkaissut <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b> | {{ post.sent_at }}
 
   {%if post.user_id == session.user_id %}

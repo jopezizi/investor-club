@@ -12,7 +12,7 @@
   <h1>Analyysit</h1>
   {% for post in post_list %}
   <p>
-    <a href='/post/{{ post.id }}'>{{post.title}}</a> | <a href='/profile/{{post.user_id}}'>{{post.username}}</a> | {{post.recommendation}} | {{post.sent_at}} | {{post.market}} | {{post.industry}} | {{post.strategy}}
+    <a href='/post/{{ post.id }}'>{{post.title}}</a> | <a href='/profile/{{post.user_id}}'>{{post.username}}</a> | {{post.recommendation}} | {{post.likes}} tykkäystä | {{post.sent_at}} | {{post.market}} | {{post.industry}} | {{post.strategy}}
     <br />
   </p>
   <hr />
