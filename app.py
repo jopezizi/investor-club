@@ -4,9 +4,21 @@ import config
 import sqlite3
 import db
 import posts, users
+import secrets
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+
+
+def check_csrf_token():
+    if 'csrf_token' not in session:
+        session['csrf_token'] = secrets.token_hex(16)
+
+
+def check_csrf():
+    if request.form.get('csrf_token') != session.get('csrf_token'):
+        abort(403)
 
 
 def require_login():
@@ -23,12 +35,16 @@ def register():
     if request.method == 'GET':
         return render_template('register.html', error=None)
 
+    check_csrf()
+
     return redirect('/register')
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         return render_template('login.html', error=None)
+
+    check_csrf()
     
     username = request.form.get("username", "")
     password = request.form.get("password", "")
@@ -45,12 +61,15 @@ def login():
     if check_password_hash(password_hash, password):
         session["username"] = username
         session["user_id"] = user_id
+        session['csrf_token'] = secrets.token_hex(16)
         return redirect("/")
     else:
         return render_template('login.html', error="Väärä tunnus tai salasana")
 
 @app.route("/create", methods=["POST"])
 def create():
+    check_csrf()
+
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
@@ -83,6 +102,7 @@ def new_post():
 @app.route('/create_post', methods=['POST'])
 def create_post():
     require_login()
+    check_csrf()
     
     if not users.get_user(session['user_id']):
         session.pop('username', None)
@@ -143,6 +163,7 @@ def edit_message(post_id):
         return render_template("edit.html", post=post)
 
     if request.method == "POST":
+        check_csrf()
         title = request.form["title"]
         content = request.form["content"]
         posts.update_post(post["id"], title, content)
@@ -170,6 +191,7 @@ def remove_message(post_id):
         return render_template("remove.html", post=post)
     
     if request.method == "POST":
+        check_csrf()
         if "continue" in request.form:
             posts.remove_post(post["id"])
         return redirect("/")
@@ -194,6 +216,7 @@ def add_profile_picture():
         return render_template('add_profile_picture.html', error = None)
     
     if request.method == 'POST':
+        check_csrf()
         file = request.files['image']
         if not file.filename.endswith('.jpg'):
             return render_template('add_profile_picture.html', error = "väärä tiedostomuoto")
@@ -207,9 +230,10 @@ def add_profile_picture():
         return redirect('/profile/'+str(user_id))        
     return redirect('/')
 
-@app.route("/delete_profile_picture")
+@app.route("/delete_profile_picture", methods=["POST"])
 def delete_profile_picture():
     require_login()
+    check_csrf()
 
     user_id = session['user_id']
     users.delete_profile_picture(user_id)
@@ -227,6 +251,7 @@ def show_image(user_id):
 @app.route('/post/<int:post_id>/toggle-like', methods=['POST'])
 def toggle_like(post_id):
     require_login()
+    check_csrf()
     user_id = session['user_id']
     liked = posts.get_user_liked(user_id, post_id)
     if liked:
@@ -241,6 +266,7 @@ def toggle_like(post_id):
 @app.route('/post/<int:post_id>/update-recommendation', methods=['POST'])
 def update_recommendation(post_id):
     require_login()
+    check_csrf()
     user_id = session['user_id']
     recommended = posts.get_user_recommended(user_id, post_id)
     recommendation = request.form['recommendation']
@@ -269,6 +295,7 @@ def show_category(category_id):
     
 @app.route('/new_comment', methods=['POST'])
 def new_comment():
+    check_csrf()
     content = request.form['content']
     user_id = session['user_id']
     post_id = request.form['post_id']

@@ -1,6 +1,6 @@
 import db
 
-def get_posts():
+def get_posts() -> list:
     sql = '''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation
             FROM posts p
             JOIN users u ON P.user_id = u.id
@@ -150,7 +150,7 @@ def add_comment(content, user_id, post_id):
     db.execute(sql, [content, user_id, post_id])
 
 def get_recommendation_distribution(user_id):
-    sql = '''SELECT 
+    sql = '''SELECT
                 SUM(CASE WHEN recommendation = 'Osta' THEN 1 ELSE 0 END) AS buys,
                 SUM(CASE WHEN recommendation = 'Myy' THEN 1 ELSE 0 END) AS sells,
                 SUM(CASE WHEN recommendation = 'Pidä' THEN 1 ELSE 0 END) AS holds

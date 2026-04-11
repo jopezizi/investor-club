@@ -15,8 +15,11 @@
   {% if profile.has_image %}
   <img src="/pfp/{{profile.id}}" width="200" height="200"/>
   <p>
-  <h3><a href="/add_profile_picture">Muokkaa profiilikuvaa</a> | 
-  <a href="/delete_profile_picture">Poista profiilikuva</a></h3>
+  <h3><a href="/add_profile_picture">Muokkaa profiilikuvaa</a></h3>
+  <form action="/delete_profile_picture" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <button type="submit">Poista profiilikuva</button>
+  </form>
   </p>
   {% else %}
   <p>

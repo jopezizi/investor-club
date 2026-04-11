@@ -50,6 +50,7 @@
             <button type="submit" name="recommendation" value="clear">Poista valinta</button>
             {% endif %}
       </fieldset>
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
       </form>
   </p>
   {% endif %}
@@ -59,6 +60,7 @@
         {% else %}
         <button>Tykkää</button>
         {% endif %}
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   </form>
   {% if session.user_id %}
   <h2>Kommentoi</h2>
@@ -67,6 +69,7 @@
       Kirjoita kommenttisi tähän:<br />
       <textarea name="content" rows="5" cols="40"></textarea>
     </p>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="hidden" name="post_id" value="{{ post.id }}" />
     <input type="submit" value="Lähetä" />
   </form>
