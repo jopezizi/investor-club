@@ -14,9 +14,11 @@
     {% for post in post_list %}
     <div class="post_homepage">
       <p>
-        <h3><a href='/post/{{ post.id }}'>{{post.title}}</a></h3><a href='/profile/{{post.user_id}}'>{{post.username}}</a> | {{post.recommendation}} | {{post.likes}} tykkäystä | {{post.sent_at}} | {{post.market}} | {{post.industry}} | {{post.strategy}}
-        <br />
-      </p>
+        <h3><a href='/post/{{ post.id }}'>{{post.title}}</a></h3><a href='/profile/{{post.user_id}}'>{{post.username}}</a> | {{post.recommendation}} | {{post.likes}} tykkäystä | {{post.sent_at}} |
+      {% if post.market %}{{post.market}}{% endif %}
+      {% if post.industry %}{% if post.market %} | {% endif %}{{post.industry}}{% endif %}
+      {% if post.strategy %}{% if post.market or post.industry %} | {% endif %}{{post.strategy}}{% endif %}
+    </p>
     </div>
     {% endfor %}
   </div>

@@ -12,15 +12,21 @@
   <div class="page">
     <h1>{{ post.title }}</h1>
     <div class="profile-info">
+      {% if post.has_image %}
       <img class="profile-info-image" src="/pfp/{{post.user_id}}">
+      {% endif %}
       <div class="profile-info-texts">
         <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b>
         {{ post.sent_at }}
       </div>
     </div>
+    {% if post.market or post.industry or post.strategy %}
     <p class="post-category-info">
-      <i>{{post.market}}</i> | <i>{{post.industry}}</i> | <i>{{post.strategy}}</i>
+      {% if post.market %}<i>{{post.market}}</i>{% endif %}
+      {% if post.industry %}{% if post.market %} | {% endif %}<i>{{post.industry}}</i>{% endif %}
+      {% if post.strategy %}{% if post.market or post.industry %} | {% endif %}<i>{{post.strategy}}</i>{% endif %}
     </p>
+    {% endif %}
     {% if post.recommendation == 'Osta'%}
     <h3 class="buy-recommendation-box">{{ post.recommendation }}</h3>
     {% elif post.recommendation == 'Myy'%}
@@ -28,52 +34,49 @@
     {% elif post.recommendation == 'Pidä'%}
     <h3 class="hold-recommendation-box">{{ post.recommendation }}</h3>
     {% endif %}
-    <hr>
+    <div class = "reactions">
+      <form action="/post/{{post.id}}/toggle-like" method="post">
+      {% if liked %}
+      <button>&#128078; Poista tykkäys &bull; {{post.likes}}</button>
+      {% else %}
+      <button> &#128077; Tykkää &bull; {{post.likes}}</button>
+      {% endif %}
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+      </form>
+      {% if post.user_id != session.user_id %}
+        <form action="/post/{{post.id}}/update-recommendation" method ="post">
+          <fieldset>
+            <legend>Suosituksesi</legend>
+            <input type="radio" id="buy" onchange="this.form.submit()" name="recommendation" value="buy" />
+            <label for="buy">Osta &bull; {{post.buys}}</label><br />
 
-    <p>
-      {{ post.content | show_lines }}
-    </p>
+            <input type="radio" id="hold" onchange="this.form.submit()" name="recommendation" value="hold" />
+            <label for="hold">Pidä &bull; {{post.holds}}</label><br />
 
-
+            <input type="radio" id="sell" onchange="this.form.submit()" name="recommendation" value="sell" />
+            <label for="sell">Myy &bull; {{post.sells}}</label>
+            <br>
+            {% if current_recommendation %}
+            <button type="submit" name="recommendation" value="clear">Poista valinta</button>
+            {% endif %}
+          </fieldset>
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        </form>
+      {% endif %}
+    </div>
     {%if post.user_id == session.user_id %}
     <p>
       <a href="/edit/{{ post.id }}">Muokkaa</a> |
       <a href="/remove/{{ post.id }}">Poista</a>
     </p>
     {% endif %}
-    <h3>{{ post.likes }} tykkäystä</h3>
-    <h3>{{ post.buys }} sanoo Osta</h3>
-    <h3>{{ post.holds }} sanoo Pidä</h3>
-    <h3>{{ post.sells }} sanoo Myy</h3>
-    {% if post.user_id != session.user_id %}
-    <form action="/post/{{post.id}}/update-recommendation" method ="post">
-      <fieldset>
-        <legend>Suosituksesi</legend>
+    <hr>
+    <p>
+      {{ post.content | show_lines }}
+    </p>
 
-        <input type="radio" id="buy" onchange="this.form.submit()" name="recommendation" value="buy" />
-        <label for="buy">Osta</label><br />
+    
 
-        <input type="radio" id="hold" onchange="this.form.submit()" name="recommendation" value="hold" />
-        <label for="hold">Pidä</label><br />
-
-        <input type="radio" id="sell" onchange="this.form.submit()" name="recommendation" value="sell" />
-        <label for="sell">Myy</label>
-        <br>
-        {% if current_recommendation %}
-        <button type="submit" name="recommendation" value="clear">Poista valinta</button>
-        {% endif %}
-      </fieldset>
-      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    </form>
-    {% endif %}
-    <form action="/post/{{post.id}}/toggle-like" method="post">
-      {% if liked %}
-      <button>Poista tykkäys</button>
-      {% else %}
-      <button>Tykkää</button>
-      {% endif %}
-      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    </form>
     {% if session.user_id %}
     <h2>Kommentoi</h2>
     <form action="/new_comment" method="post">
@@ -89,18 +92,12 @@
     <h2>Kommentit</h2>
     {% for comment in comments %}
     <p>
-      <b><a href="/profile/{{ comment.user_id }}">{{comment.username}}</a></b> ({{comment.sent_at}}):
+      <b><a href="/profile/{{ comment.user_id }}">{{comment.username}}</a></b> ({{comment.sent_at}})
     </p>
     <p>
       {{comment.content | show_lines }}
     </p>
-    {% if comment.user_id == session.user_id %}
-    <p>
-      <a href="/edit/{{ post.id }}">Muokkaa</a> |
-      <a href="/remove/{{ post.id }}">Poista</a>
-    </p>
-    {% endif %}
-    <hr />
+
     {% endfor %}
   </div>
 </body>

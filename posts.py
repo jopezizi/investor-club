@@ -17,7 +17,7 @@ def add_post(title, content, user_id, market, industry, strategy, recommendation
     return db.last_insert_id()
     
 def get_post(post_id):
-    sql = '''SELECT p.id, p.title, p.content, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.holds
+    sql = '''SELECT p.id, p.title, p.content, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.holds, u.image IS NOT NULL AS has_image
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE p.id = ?
@@ -142,7 +142,7 @@ def get_posts_by_category(cat_class, category):
     return db.query(sql, [category])
 
 def get_comments(post_id):
-    sql = '''SELECT c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username FROM comments c, users u WHERE c.user_id = u.id AND c.post_id = ? ORDER BY c.id'''
+    sql = '''SELECT c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username FROM comments c, users u WHERE c.user_id = u.id AND c.post_id = ? ORDER BY c.id DESC'''
     return db.query(sql, [post_id])
 
 def add_comment(content, user_id, post_id):
