@@ -10,7 +10,7 @@ Sijoitusalusta, jossa käyttäjät voivat julkaista ja kommentoida osakevalintoj
 - Analyysille voi valita luokittelun: toimiala, markkina & strategia. Analyysejä voi selata luokittain.
 - Muiden analyyseistä voi tykätä ja äänestää 'Osta tai Myy'.
 - Muiden analyysejä voi kommentoida.
-- Sovelluksessa on käyttäjäsivut, josta näkyy tilastoja: analyysien kokonaismäärä, suositusten jakauma (Osta vs. Myy), tykkäyksien määrä
+- Sovelluksessa on käyttäjäsivut, josta näkyy tilastoja: analyysien kokonaismäärä, suositusten jakauma (Osta vs. Myy vs. Pidä), tykkäyksien määrä
 
 # ASENNUSOHJEET
 - Suorita setup.sh- tiedosto (terminaalissa ./setup.sh) asentaaksesi kaikki tarvittavat riippuvuudet ja käynnistääksesi sivun
