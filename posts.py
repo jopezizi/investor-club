@@ -156,3 +156,7 @@ def get_recommendation_distribution(user_id):
                 SUM(CASE WHEN recommendation = 'Pidä' THEN 1 ELSE 0 END) AS holds
             FROM posts WHERE user_id = ?;'''
     return db.query(sql, [user_id])
+
+def get_user_total_likes(user_id):
+    sql = '''SELECT SUM(likes) as likes FROM posts WHERE user_id = ?'''
+    return db.query(sql, [user_id])

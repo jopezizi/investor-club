@@ -183,7 +183,8 @@ def profile(user_id):
         abort(404)
     postlist = users.get_posts(user_id)
     recommendations = posts.get_recommendation_distribution(user_id)[0]
-    return render_template('profile.html', profile=prof, posts=postlist, recommendations = recommendations)
+    likes = posts.get_user_total_likes(user_id)[0]
+    return render_template('profile.html', profile=prof, posts=postlist, recommendations = recommendations, likes = likes)
 
 @app.route("/add_profile_picture", methods = ["GET", "POST"])
 def add_profile_picture():

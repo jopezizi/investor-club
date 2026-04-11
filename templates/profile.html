@@ -42,6 +42,13 @@
     Viimeisin julkaisu lähetetty {{posts[0].sent_at}}
   </p>
   {% endif %}
+  <p>
+    {% if likes.likes == 1 %}
+      {{likes.likes}} tykkäys
+    {% else %}
+      {{likes.likes}} tykkäystä
+    {% endif %}
+  </p>
   <h3>Suositusten jakauma</h3>
   Osta: {{recommendations.buys}}
   Myy: {{recommendations.sells}}
