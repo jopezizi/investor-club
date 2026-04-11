@@ -31,17 +31,21 @@
     Käyttäjä luotu {{ profile.created_at }} ({{ profile.ago[9:11]|int }} päivää sitten)
   </p>
   <p>
-    Käyttäjä lähettänyt {{ posts | count }} viestiä
+    Käyttäjä lähettänyt {{ posts | count }} julkaisua
   </p>
 
   {% if posts %}
   <p>
-    Ensimmäinen viesti lähetetty {{posts[-1].sent_at}}
+    Ensimmäinen julkaisu lähetetty {{posts[-1].sent_at}}
   </p>
     <p>
-    Viimeisin viesti lähetetty {{posts[0].sent_at}}
+    Viimeisin julkaisu lähetetty {{posts[0].sent_at}}
   </p>
   {% endif %}
+  <h3>Suositusten jakauma</h3>
+  Osta: {{recommendations.buys}}
+  Myy: {{recommendations.sells}}
+  Pidä: {{recommendations.holds}}
   <h3>Käyttäjän julkaisut</h3>
   <ul>
   {% for post in posts %}

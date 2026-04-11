@@ -181,8 +181,9 @@ def profile(user_id):
     prof = users.get_user(user_id)
     if not prof:
         abort(404)
-    posts = users.get_posts(user_id)
-    return render_template('profile.html', profile=prof, posts=posts)
+    postlist = users.get_posts(user_id)
+    recommendations = posts.get_recommendation_distribution(user_id)[0]
+    return render_template('profile.html', profile=prof, posts=postlist, recommendations = recommendations)
 
 @app.route("/add_profile_picture", methods = ["GET", "POST"])
 def add_profile_picture():

@@ -148,3 +148,11 @@ def get_comments(post_id):
 def add_comment(content, user_id, post_id):
     sql = '''INSERT INTO comments (content, sent_at, user_id, post_id) VALUES (?, datetime('now'), ?,?)'''
     db.execute(sql, [content, user_id, post_id])
+
+def get_recommendation_distribution(user_id):
+    sql = '''SELECT 
+                SUM(CASE WHEN recommendation = 'Osta' THEN 1 ELSE 0 END) AS buys,
+                SUM(CASE WHEN recommendation = 'Myy' THEN 1 ELSE 0 END) AS sells,
+                SUM(CASE WHEN recommendation = 'Pidä' THEN 1 ELSE 0 END) AS holds
+            FROM posts WHERE user_id = ?;'''
+    return db.query(sql, [user_id])
