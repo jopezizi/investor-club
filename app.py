@@ -264,3 +264,12 @@ def show_category(category_id):
         class_name, cat_name = info[0], info[1]
         post_list = posts.get_posts_by_category(class_name, cat_name)
         return render_template('show_category.html', category = cat_name, post_list = post_list)
+    
+@app.route('/new_comment', methods=['POST'])
+def new_comment():
+    content = request.form['content']
+    user_id = session['user_id']
+    post_id = request.form['post_id']
+
+    posts.add_comment(content, user_id, post_id)
+    return redirect('/post/'+ str(post_id))
