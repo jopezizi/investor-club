@@ -5,21 +5,27 @@ import sqlite3
 import db
 import posts, users
 import secrets
+import markupsafe
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
 
 
+@app.before_request
 def check_csrf_token():
     if 'csrf_token' not in session:
         session['csrf_token'] = secrets.token_hex(16)
-
 
 def check_csrf():
     if request.form.get('csrf_token') != session.get('csrf_token'):
         abort(403)
 
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace('\n', '<br />')
+    return markupsafe.Markup(content)
 
 def require_login():
     if 'user_id' not in session:

@@ -24,16 +24,16 @@
   <h1>Hakutulokset</h1>
   <hr>
   {% if results %}
-    {% for result in results %}
-      <p>
-        <a href="/post/{{ result[0] }}"><b>{{ result[1] }}</b></a> | {{ result[4] }} | {{ result[3] }}
-      </p>
-      <hr>
-    {% endfor %}
+  {% for result in results %}
+  <p>
+    <a href="/post/{{ result[0] }}"><b>{{ result[1] }}</b></a> | {{ result[4] }} | {{ result[3] }}
+  </p>
+  <hr>
+  {% endfor %}
   {% else %}
-    <p>
-      Ei hakutuloksia.
-    </p>
+  <p>
+    Ei hakutuloksia.
+  </p>
   {% endif %}
 </body>
 </html>

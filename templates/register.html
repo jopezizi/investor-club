@@ -9,15 +9,15 @@
 
 <body>
   {% include 'header.html' %}
-  
+
   <h1>Luo uusi käyttäjä</h1>
-  
+
   {% if error %}
   <div style="color: red; border: 1px solid red; padding: 10px; margin: 10px 0; background-color: #ffe6e6;">
     <strong>VIRHE:</strong> {{ error }}
   </div>
   {% endif %}
-  
+
   {% if success %}
   <div style="color: green; border: 1px solid green; padding: 10px; margin: 10px 0; background-color: #e6ffe6;">
     <strong>Onnistui:</strong> {{ success }}

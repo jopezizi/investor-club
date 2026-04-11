@@ -9,15 +9,15 @@
 
 <body>
   {% include 'header.html' %}
-  
+
   <h1>Kirjautuminen</h1>
-  
+
   {% if error %}
   <div style="color: red; border: 1px solid red; padding: 10px; margin: 10px 0; background-color: #ffe6e6;">
     <strong>VIRHE:</strong> {{ error }}
   </div>
   {% endif %}
-  
+
   <form action="/login" method="post">
     <p>
       Tunnus: <br />
@@ -30,7 +30,7 @@
     <input type="submit" value="Kirjaudu" />
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   </form>
-  
+
   <p>
     Eikö sinulla ole tunnusta? 
     <a href="/register"><button>Luo uusi käyttäjä</button></a>

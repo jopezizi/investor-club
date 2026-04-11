@@ -15,18 +15,18 @@
   {% if profile.has_image %}
   <img src="/pfp/{{profile.id}}" width="200" height="200"/>
   <p>
-  <h3><a href="/add_profile_picture">Muokkaa profiilikuvaa</a></h3>
-  <form action="/delete_profile_picture" method="post">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <button type="submit">Poista profiilikuva</button>
-  </form>
+    <h3><a href="/add_profile_picture">Muokkaa profiilikuvaa</a></h3>
+    <form action="/delete_profile_picture" method="post">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+      <button type="submit">Poista profiilikuva</button>
+    </form>
   </p>
   {% else %}
   <p>
     <h3><a href="/add_profile_picture">Lisää profiilikuva</a></h3>
   </p>
   {% endif %}
-  
+
   {% endif %}
 
 
@@ -41,7 +41,7 @@
   <p>
     Ensimmäinen julkaisu lähetetty {{posts[-1].sent_at}}
   </p>
-    <p>
+  <p>
     Viimeisin julkaisu lähetetty {{posts[0].sent_at}}
   </p>
   {% endif %}
@@ -58,7 +58,7 @@
   Pidä: {{recommendations.holds}}
   <h3>Käyttäjän julkaisut</h3>
   <ul>
-  {% for post in posts %}
+    {% for post in posts %}
     <li>
       <a href="/post/{{post.id}}">
         {{ post.title }}
@@ -66,7 +66,7 @@
       <br />
       ({{ post.sent_at }})
     </li>
-  {% endfor %}
+    {% endfor %}
   </ul>
 </body>
 </html>

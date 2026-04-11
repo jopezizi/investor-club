@@ -6,9 +6,9 @@
   <link rel="stylesheet" href="/static/main.css">
   <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
-  
+
 <body>
-{% include 'header.html' %}
+  {% include 'header.html' %}
 
   <h1>Uusi julkaisu</h1>
 
@@ -22,44 +22,44 @@
       <textarea name="content" rows="5" cols="40" required maxlength="5000"></textarea>
     </p>
     <p>
-        Päämarkkina (valitse yksi):
-        <select name="market" required>
-            <option value="OMX Helsinki">OMX Helsinki</option>
-            <option value="OMX Stockholm">OMX Stockholm</option>
-            <option value="NYSE / NASDAQ">NYSE / NASDAQ</option>
-            <option value="DAX">DAX</option>
-            <option value="Kehittyvät markkinat">Kehittyvät markkinat</option>
-            <option value="Kryptomarkkinat">Kryptomarkkinat</option>
-        </select>
+      Päämarkkina (valitse yksi):
+      <select name="market" required>
+        <option value="OMX Helsinki">OMX Helsinki</option>
+        <option value="OMX Stockholm">OMX Stockholm</option>
+        <option value="NYSE / NASDAQ">NYSE / NASDAQ</option>
+        <option value="DAX">DAX</option>
+        <option value="Kehittyvät markkinat">Kehittyvät markkinat</option>
+        <option value="Kryptomarkkinat">Kryptomarkkinat</option>
+      </select>
     </p>
     <p>
-        <fieldset>
-            <legend>Toimialat</legend>
+      <fieldset>
+        <legend>Toimialat</legend>
 
-            <label><input type="checkbox" name="industry" value="Teknologia"> Teknologia</label><br>
-            <label><input type="checkbox" name="industry" value="Rahoitus"> Rahoitus</label><br>
-            <label><input type="checkbox" name="industry" value="Terveydenhuolto"> Terveydenhuolto</label><br>
-            <label><input type="checkbox" name="industry" value="Teollisuus"> Teollisuus</label><br>
-            <label><input type="checkbox" name="industry" value="Kulutustavarat"> Kulutustavarat</label><br>
-            <label><input type="checkbox" name="industry" value="Energia"> Energia</label><br>
-            <label><input type="checkbox" name="industry" value="Kiinteistot"> Kiinteistöt</label><br>
-        </fieldset>
+        <label><input type="checkbox" name="industry" value="Teknologia"> Teknologia</label><br>
+        <label><input type="checkbox" name="industry" value="Rahoitus"> Rahoitus</label><br>
+        <label><input type="checkbox" name="industry" value="Terveydenhuolto"> Terveydenhuolto</label><br>
+        <label><input type="checkbox" name="industry" value="Teollisuus"> Teollisuus</label><br>
+        <label><input type="checkbox" name="industry" value="Kulutustavarat"> Kulutustavarat</label><br>
+        <label><input type="checkbox" name="industry" value="Energia"> Energia</label><br>
+        <label><input type="checkbox" name="industry" value="Kiinteistot"> Kiinteistöt</label><br>
+      </fieldset>
     </p>
     <p>
-        <fieldset>
-            <legend>Sijoitusstrategia</legend>
+      <fieldset>
+        <legend>Sijoitusstrategia</legend>
 
-            <label><input type="checkbox" name="strategy" value="Arvosijoittaminen"> Arvosijoittaminen</label><br>
-            <label><input type="checkbox" name="strategy" value="Kasvusijoittaminen"> Kasvusijoittaminen</label><br>
-            <label><input type="checkbox" name="strategy" value="Osinkosijoittaminen"> Osinkosijoittaminen</label><br>
-            <label><input type="checkbox" name="strategy" value="Indeksisijoittaminen"> Indeksisijoittaminen</label><br>
-            <label><input type="checkbox" name="strategy" value="Laatusijoittaminen"> Laatusijoittaminen</label><br>
-            <label><input type="checkbox" name="strategy" value="Käänneyhtiö"> Käänneyhtiö</label><br>
-            <label><input type="checkbox" name="strategy" value="Vastuullisuus">Vastuullisuus / ESG</label><br>
-        </fieldset>
+        <label><input type="checkbox" name="strategy" value="Arvosijoittaminen"> Arvosijoittaminen</label><br>
+        <label><input type="checkbox" name="strategy" value="Kasvusijoittaminen"> Kasvusijoittaminen</label><br>
+        <label><input type="checkbox" name="strategy" value="Osinkosijoittaminen"> Osinkosijoittaminen</label><br>
+        <label><input type="checkbox" name="strategy" value="Indeksisijoittaminen"> Indeksisijoittaminen</label><br>
+        <label><input type="checkbox" name="strategy" value="Laatusijoittaminen"> Laatusijoittaminen</label><br>
+        <label><input type="checkbox" name="strategy" value="Käänneyhtiö"> Käänneyhtiö</label><br>
+        <label><input type="checkbox" name="strategy" value="Vastuullisuus">Vastuullisuus / ESG</label><br>
+      </fieldset>
     </p>
     <p>
-    <fieldset>
+      <fieldset>
         <legend>Suosituksesi</legend>
 
         <input type="radio" id="buy" name="recommendation" value="Osta" />
@@ -70,7 +70,7 @@
 
         <input type="radio" id="sell" name="recommendation" value="Myy" />
         <label for="sell">Myy</label>
-    </fieldset>
+      </fieldset>
     </p>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Lähetä" />
