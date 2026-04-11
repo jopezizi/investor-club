@@ -9,17 +9,17 @@
 
 <body>
   {% include 'header.html' %}
-
+  <div class="page">
   <h1>Luo uusi käyttäjä</h1>
 
   {% if error %}
-  <div style="color: red; border: 1px solid red; padding: 10px; margin: 10px 0; background-color: #ffe6e6;">
+  <div class ="error">
     <strong>VIRHE:</strong> {{ error }}
   </div>
   {% endif %}
 
   {% if success %}
-  <div style="color: green; border: 1px solid green; padding: 10px; margin: 10px 0; background-color: #e6ffe6;">
+  <div class="success">
     <strong>Onnistui:</strong> {{ success }}
   </div>
   <p>
@@ -43,6 +43,7 @@
     <input type="submit" value="Luo tunnus" />
   </form>
   {% endif %}
+  </div>
 </body>
 
 </html>

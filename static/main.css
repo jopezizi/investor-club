@@ -1,13 +1,78 @@
 body {
     margin: auto;
     max-width: 50em;
-    font-family: Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif
 }
 
-#header {
-    overflow: auto
+.page {
+    margin: 1em;
 }
 
-.right_header {
-    float: right;
+.page h1 {
+    margin-bottom: 0.3em;
+}
+
+.header {
+    margin: 1em;
+}
+
+.nav {
+    margin: 1em;
+}
+.content {
+}
+
+.content h1 {
+    margin-left: 0.5em;
+}
+
+.post_homepage {
+    border: 2px solid grey;
+    margin: 1em;
+    padding: 0.2em 0.5em;
+}
+
+.error {
+    color: red; 
+    border: 1px solid red;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #ffe6e6;
+}
+
+.success {
+    color: green; 
+    border: 1px solid green; 
+    padding: 10px; 
+    margin: 10px 0; 
+    background-color: #e6ffe6;
+}
+
+.profile-info {
+    display:flex;
+    align-items:center;
+    gap: 10px;
+}
+
+.profile-info-image {
+    height: 36px;
+    width: 36px;
+}
+
+.profile-info-texts {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.post-category-info {
+}
+
+.sell-recommendation-box {
+    display: inline-block;
+    color: red; 
+    border: 1px solid red;
+    padding: 10px;
+    margin: 0px 0;
+    background-color: #ffe6e6;
 }

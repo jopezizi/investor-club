@@ -6,6 +6,7 @@
 </head>
 <body>
   {% include 'header.html' %}
+  <div class="page">
   <h1>Kategoriat</h1>
   {% for i in range (classes | length) %}
   <p>
@@ -17,5 +18,6 @@
     </ul>
   </p>
   {% endfor %}
+  </div>
 </body>
 </html>

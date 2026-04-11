@@ -6,6 +6,7 @@
 </head>
 <body>
   {% include 'header.html' %}
+  <div class="page">
   <form action="/remove/{{ post.id }}" method="post">
     <p>
       Haluatko varmasti poistaa julkaisun?
@@ -14,5 +15,6 @@
     <input type="submit" name="continue" value="Jatka" />
     <input type="submit" name="cancel" value="Peruuta" />
   </form>
+  </div>
 </body>
 </html>

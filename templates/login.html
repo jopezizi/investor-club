@@ -9,11 +9,11 @@
 
 <body>
   {% include 'header.html' %}
-
+  <div class="page">
   <h1>Kirjautuminen</h1>
 
   {% if error %}
-  <div style="color: red; border: 1px solid red; padding: 10px; margin: 10px 0; background-color: #ffe6e6;">
+  <div class="error">
     <strong>VIRHE:</strong> {{ error }}
   </div>
   {% endif %}
@@ -35,6 +35,7 @@
     Eikö sinulla ole tunnusta? 
     <a href="/register"><button>Luo uusi käyttäjä</button></a>
   </p>
+  </div>
 </body>
 
 </html>

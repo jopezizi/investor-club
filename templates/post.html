@@ -9,30 +9,43 @@
 
 <body>
   {% include 'header.html' %}
-  <h1>{{ post.title }}</h1>
-  julkaissut <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b> | {{ post.sent_at }}
-  <h3>{{ post.recommendation }}</h3>
-  <hr>
-  <p>
-    <i>{{post.market}}</i> | <i>{{post.industry}}</i> | <i>{{post.strategy}}</i>
-  </p>
-  <p>
-    {{ post.content | show_lines }}
-  </p>
+  <div class="page">
+    <h1>{{ post.title }}</h1>
+    <div class="profile-info">
+      <img class="profile-info-image" src="/pfp/{{post.user_id}}">
+      <div class="profile-info-texts">
+        <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b>
+        {{ post.sent_at }}
+      </div>
+    </div>
+    <p class="post-category-info">
+      <i>{{post.market}}</i> | <i>{{post.industry}}</i> | <i>{{post.strategy}}</i>
+    </p>
+    {% if post.recommendation == 'Osta'%}
+    <h3 class="buy-recommendation-box">{{ post.recommendation }}</h3>
+    {% elif post.recommendation == 'Myy'%}
+    <h3 class="sell-recommendation-box">{{ post.recommendation }}</h3>
+    {% elif post.recommendation == 'Pidä'%}
+    <h3 class="hold-recommendation-box">{{ post.recommendation }}</h3>
+    {% endif %}
+    <hr>
+
+    <p>
+      {{ post.content | show_lines }}
+    </p>
 
 
-  {%if post.user_id == session.user_id %}
-  <p>
-    <a href="/edit/{{ post.id }}">Muokkaa</a> |
-    <a href="/remove/{{ post.id }}">Poista</a>
-  </p>
-  {% endif %}
-  <h3>{{ post.likes }} tykkäystä</h3>
-  <h3>{{ post.buys }} sanoo Osta</h3>
-  <h3>{{ post.holds }} sanoo Pidä</h3>
-  <h3>{{ post.sells }} sanoo Myy</h3>
-  {% if post.user_id != session.user_id %}
-  <p>
+    {%if post.user_id == session.user_id %}
+    <p>
+      <a href="/edit/{{ post.id }}">Muokkaa</a> |
+      <a href="/remove/{{ post.id }}">Poista</a>
+    </p>
+    {% endif %}
+    <h3>{{ post.likes }} tykkäystä</h3>
+    <h3>{{ post.buys }} sanoo Osta</h3>
+    <h3>{{ post.holds }} sanoo Pidä</h3>
+    <h3>{{ post.sells }} sanoo Myy</h3>
+    {% if post.user_id != session.user_id %}
     <form action="/post/{{post.id}}/update-recommendation" method ="post">
       <fieldset>
         <legend>Suosituksesi</legend>
@@ -52,30 +65,28 @@
       </fieldset>
       <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     </form>
-  </p>
-  {% endif %}
-  <form action="/post/{{post.id}}/toggle-like" method="post">
-    {% if liked %}
-    <button>Poista tykkäys</button>
-    {% else %}
-    <button>Tykkää</button>
     {% endif %}
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-  </form>
-  {% if session.user_id %}
-  <h2>Kommentoi</h2>
-  <form action="/new_comment" method="post">
-    <p>
-      Kirjoita kommenttisi tähän:<br />
-      <textarea name="content" rows="5" cols="40"></textarea>
-    </p>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="hidden" name="post_id" value="{{ post.id }}" />
-    <input type="submit" value="Lähetä" />
-  </form>
-  {% endif %}
-  <h2>Kommentit</h2>
-  <p>
+    <form action="/post/{{post.id}}/toggle-like" method="post">
+      {% if liked %}
+      <button>Poista tykkäys</button>
+      {% else %}
+      <button>Tykkää</button>
+      {% endif %}
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    </form>
+    {% if session.user_id %}
+    <h2>Kommentoi</h2>
+    <form action="/new_comment" method="post">
+      <p>
+        Kirjoita kommenttisi tähän:<br />
+        <textarea name="content" rows="5" cols="40"></textarea>
+      </p>
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+      <input type="hidden" name="post_id" value="{{ post.id }}" />
+      <input type="submit" value="Lähetä" />
+    </form>
+    {% endif %}
+    <h2>Kommentit</h2>
     {% for comment in comments %}
     <p>
       <b><a href="/profile/{{ comment.user_id }}">{{comment.username}}</a></b> ({{comment.sent_at}}):
@@ -91,6 +102,6 @@
     {% endif %}
     <hr />
     {% endfor %}
-  </p>
+  </div>
 </body>
 </html>

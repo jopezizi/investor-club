@@ -7,6 +7,7 @@
 </head>
 <body>
   {% include 'header.html' %}
+  <div class="page">
   <form action="/edit/{{ post.id }}" method="post">
     <p>
       Otsikko:<br />
@@ -19,5 +20,6 @@
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Lähetä" />
   </form>
+  </div>
 </body>
 </html>

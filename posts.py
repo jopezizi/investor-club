@@ -151,12 +151,12 @@ def add_comment(content, user_id, post_id):
 
 def get_recommendation_distribution(user_id):
     sql = '''SELECT
-                SUM(CASE WHEN recommendation = 'Osta' THEN 1 ELSE 0 END) AS buys,
-                SUM(CASE WHEN recommendation = 'Myy' THEN 1 ELSE 0 END) AS sells,
-                SUM(CASE WHEN recommendation = 'Pidä' THEN 1 ELSE 0 END) AS holds
+                COALESCE(SUM(CASE WHEN recommendation = 'Osta' THEN 1 ELSE 0 END),0) AS buys,
+                COALESCE(SUM(CASE WHEN recommendation = 'Myy' THEN 1 ELSE 0 END),0) AS sells,
+                COALESCE(SUM(CASE WHEN recommendation = 'Pidä' THEN 1 ELSE 0 END),0) AS holds
             FROM posts WHERE user_id = ?;'''
     return db.query(sql, [user_id])
 
 def get_user_total_likes(user_id):
-    sql = '''SELECT SUM(likes) as likes FROM posts WHERE user_id = ?'''
+    sql = '''SELECT COALESCE(SUM(likes),0) as likes FROM posts WHERE user_id = ?'''
     return db.query(sql, [user_id])

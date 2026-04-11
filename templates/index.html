@@ -9,18 +9,17 @@
 
 <body>
   {% include 'header.html' %}
-  <h1>Analyysit</h1>
-  {% for post in post_list %}
-  <p>
-    <h3><a href='/post/{{ post.id }}'>{{post.title}}</a></h3><a href='/profile/{{post.user_id}}'>{{post.username}}</a> | {{post.recommendation}} | {{post.likes}} tykkäystä | {{post.sent_at}} | {{post.market}} | {{post.industry}} | {{post.strategy}}
-    <br />
-  </p>
-  <hr />
-  {% endfor %}
-  {% if session.username %}
-
-  {% endif %}
-
+  <div class="content">
+    <h1>Analyysit</h1>
+    {% for post in post_list %}
+    <div class="post_homepage">
+      <p>
+        <h3><a href='/post/{{ post.id }}'>{{post.title}}</a></h3><a href='/profile/{{post.user_id}}'>{{post.username}}</a> | {{post.recommendation}} | {{post.likes}} tykkäystä | {{post.sent_at}} | {{post.market}} | {{post.industry}} | {{post.strategy}}
+        <br />
+      </p>
+    </div>
+    {% endfor %}
+  </div>
 </body>
 
 </html>

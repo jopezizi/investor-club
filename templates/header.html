@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <div id ='header'>
+        <div class ='header'>
             <h1><span style="color:blue">INVESTOR CLUB</span></h1>
             {% if session.username %}
             <p>
@@ -17,6 +17,8 @@
             </p>
             {% endif %}
             <hr>
+        </div>
+        <div class = 'nav'>
             <a href="/"><button>Etusivu</button></a>
             {% if session.username %}
             <a href="/new_post"><button>Uusi julkaisu</button></a>
@@ -26,7 +28,7 @@
             {% if session.username %}
             <a href="/profile/{{ session.user_id }}"><button>Oma profiili</button></a>
             {% endif %}
+            <hr />
         </div>
-        <hr />
     </body>
 </html>

@@ -9,11 +9,15 @@
 
 <body>
   {% include 'header.html' %}
+  <div class="page">
   <h1>{{ profile.username }}</h1>
+
+  {% if profile.has_image %}
+  <img src="/pfp/{{profile.id}}" width="200" height="200"/>
+  {% endif %}
 
   {%if profile.id == session.user_id %}
   {% if profile.has_image %}
-  <img src="/pfp/{{profile.id}}" width="200" height="200"/>
   <p>
     <h3><a href="/add_profile_picture">Muokkaa profiilikuvaa</a></h3>
     <form action="/delete_profile_picture" method="post">
@@ -47,13 +51,13 @@
   {% endif %}
   <p>
     {% if likes.likes == 1 %}
-      {{likes.likes}} tykkäys
+      {{likes.likes }} tykkäys
     {% else %}
-      {{likes.likes}} tykkäystä
+      {{likes.likes }} tykkäystä
     {% endif %}
   </p>
   <h3>Suositusten jakauma</h3>
-  Osta: {{recommendations.buys}}
+  Osta: {{recommendations.buys }}
   Myy: {{recommendations.sells}}
   Pidä: {{recommendations.holds}}
   <h3>Käyttäjän julkaisut</h3>
@@ -68,5 +72,6 @@
     </li>
     {% endfor %}
   </ul>
+  </div>
 </body>
 </html>
