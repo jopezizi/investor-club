@@ -1,3 +1,5 @@
+# Script partially generated with CurreChat
+
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$PROJECT_DIR"
 
