@@ -1,4 +1,6 @@
-INSERT OR IGNORE INTO categories (class, name) VALUES
+DELETE FROM categories;
+
+INSERT INTO categories (class, name) VALUES
   ('Markkina', 'OMX Helsinki'),
   ('Markkina', 'OMX Stockholm'),
   ('Markkina', 'NYSE / NASDAQ'),
