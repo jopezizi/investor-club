@@ -22,9 +22,9 @@
         </div>
         <div class="profile-info">
             {% if post.has_image %}
-            <img class="profile-info-image" src="/pfp/{{post.user_id}}">
+            <img class="profile-info-image" src="/pfp/{{post.user_id}}" alt="Profile picture of the publisher of this post.">
             {% else %}
-            <img class="profile-info-image" src="/static/default_pfp.svg">
+            <img class="profile-info-image" src="/static/default_pfp.svg" alt="Default profile picture for non-profile-picture-users.">
             {% endif %}
             <div class="profile-info-texts">
                 <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b>

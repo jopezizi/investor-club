@@ -14,16 +14,16 @@
 
     <form action='/create_post' method='post' enctype='multipart/form-data'>
         <p>
-            Otsikko: <br />
-            <input type="text" name="title" required maxlength="100"/>
+            <label for="title">Otsikko:</label> <br />
+            <input type="text" id="title" name="title" required maxlength="100"/>
         </p>
         <p>
-            Viesti: <br />
-            <textarea name="content" rows="5" cols="40" required maxlength="5000"></textarea>
+            <label for="content">Viesti:</label> <br />
+            <textarea id="content" name="content" rows="5" cols="40" required maxlength="5000"></textarea>
         </p>
         <p>
-            Päämarkkina (valitse yksi):
-            <select name="market" required>
+            <label for="market">Päämarkkina (valitse yksi):</label>
+            <select id="market" name="market" required>
                 <option value="OMX Helsinki">OMX Helsinki</option>
                 <option value="OMX Stockholm">OMX Stockholm</option>
                 <option value="NYSE / NASDAQ">NYSE / NASDAQ</option>
@@ -74,7 +74,7 @@
         </p>
         <div>
         <p>
-            Kuva: <input type="file" name="post_image" accept=".jpg" />
+            <label for="post_image">Kuva:</label> <input type="file" id="post_image" name="post_image" accept=".jpg" />
         </p>
     </div>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />

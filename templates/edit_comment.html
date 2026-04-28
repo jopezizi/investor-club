@@ -13,8 +13,8 @@
             Muokkaa kommenttiasi julkaisussa <span class="remove_edit_post_title">{{ post.title }}</span>
         </p>
         <p>
-            Sisältö:<br />
-            <textarea name="content" rows="5" cols="40">{{ comment.content }}</textarea>
+            <label for="content">Sisältö:</label><br />
+            <textarea id="content" name="content" rows="5" cols="40">{{ comment.content }}</textarea>
         </p>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" name='continue' value="Lähetä" />

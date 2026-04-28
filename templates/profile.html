@@ -13,7 +13,7 @@
     <h1>{{ profile.username }}</h1>
 
     {% if profile.has_image %}
-    <img src="/pfp/{{profile.id}}" width="200" height="200"/>
+    <img src="/pfp/{{profile.id}}" width="200" height="200" alt="Profile picture of {{profile.username}}"/>
     {% endif %}
 
     {%if profile.id == session.user_id %}
