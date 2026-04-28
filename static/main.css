@@ -62,9 +62,6 @@ body {
     flex-wrap: wrap;
 }
 
-.content {
-}
-
 .content h1 {
         margin-left: 0.5em;
 }
@@ -285,6 +282,7 @@ body {
     font: 14px/1.2 system-ui, sans-serif;
 }
 
+/* Disclaimer: these ticker items below are made with help of CurreChat */
 
 .ticker-titles {
     display: inline-block;
@@ -329,3 +327,4 @@ body {
     0%   { transform: translateX(0); }
     100% { transform: translateX(-100%); }
 }
+

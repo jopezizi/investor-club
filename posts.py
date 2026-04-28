@@ -1,7 +1,9 @@
 import db
 
 def get_posts() -> list:
-    sql = '''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.image
+    sql = '''SELECT
+                p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market,
+                p.industry, p.strategy, p.recommendation, p.image
             FROM posts p
             JOIN users u ON P.user_id = u.id
             ORDER BY p.id DESC
@@ -11,13 +13,17 @@ def get_posts() -> list:
 
 def add_post(title, content, user_id, market, industry, strategy, recommendation, image):
     sql = '''
-        INSERT INTO posts (title, content, sent_at, user_id, market, industry, strategy, recommendation, image) VALUES(?, ?, datetime('now', 'localtime'), ?, ?, ?, ?, ?, ?)
+        INSERT INTO posts 
+            (title, content, sent_at, user_id, market, industry, strategy, recommendation, image) 
+        VALUES(?, ?, datetime('now', 'localtime'), ?, ?, ?, ?, ?, ?)
         '''
     db.execute(sql, [title, content, user_id, market, industry, strategy, recommendation, image])
     return db.last_insert_id()
     
 def get_post(post_id):
-    sql = '''SELECT p.id, p.title, p.content, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.holds, p.image, u.image IS NOT NULL AS has_image
+    sql = '''SELECT 
+                p.id, p.title, p.content, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, 
+                p.market, p.industry, p.strategy, p.recommendation, p.holds, p.image, u.image IS NOT NULL AS has_image
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE p.id = ?
@@ -51,13 +57,13 @@ def add_like(user_id, post_id):
     sql = 'INSERT INTO user_likes (user_id, post_id) VALUES (?,?)'
     db.execute(sql, [user_id, post_id])
     sql = 'UPDATE posts SET likes = likes + 1 WHERE id = ?'
-    db.execute(sql, [post_id] )
+    db.execute(sql, [post_id])
 
 def delete_like(user_id, post_id):
     sql = 'DELETE FROM user_likes WHERE user_id = ? AND post_id = ?'
     db.execute(sql, [user_id, post_id])
     sql = 'UPDATE posts SET likes = likes - 1 WHERE id = ? AND likes > 0'
-    db.execute(sql, [post_id] )
+    db.execute(sql, [post_id])
 
 def get_user_recommended(user_id, post_id):
     sql = 'SELECT recommendation FROM recommendations WHERE user_id = ? AND post_id = ?'
@@ -101,7 +107,7 @@ def update_recommendation(user_id, post_id, recommended, recommendation):
     if recommendation == 'buy':
         buy += 1
     elif recommendation == 'sell':
-        sell +=1
+        sell += 1
     elif recommendation == 'hold':
         hold += 1
 
@@ -133,7 +139,9 @@ def get_posts_by_category(cat_class, category):
     else:
         return []
 
-    sql = f'''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.image
+    sql = f'''SELECT 
+                p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, 
+                p.sells, p.market, p.industry, p.strategy, p.recommendation, p.image
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE {where}
@@ -142,11 +150,18 @@ def get_posts_by_category(cat_class, category):
     return db.query(sql, [category])
 
 def get_comments(post_id):
-    sql = '''SELECT c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username FROM comments c, users u WHERE c.user_id = u.id AND c.post_id = ? ORDER BY c.id DESC'''
+    sql = '''SELECT 
+                c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username 
+            FROM comments c, users u 
+            WHERE c.user_id = u.id AND c.post_id = ? 
+            ORDER BY c.id DESC'''
     return db.query(sql, [post_id])
 
 def get_comment(post_id, comment_id):
-    sql = '''SELECT c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username FROM comments c, users u WHERE c.user_id = u.id AND c.post_id = ? AND c.id = ?'''
+    sql = '''SELECT 
+                c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username 
+            FROM comments c, users u 
+            WHERE c.user_id = u.id AND c.post_id = ? AND c.id = ?'''
     result = db.query(sql, [post_id, comment_id])
     return result[0] if result else None
     

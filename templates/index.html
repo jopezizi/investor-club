@@ -2,26 +2,32 @@
 <html>
 
 <head>
-    <title>Investor Club</title>
-    <link rel="stylesheet" href="/static/main.css">
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <title>Investor Club</title>
+  <link rel="stylesheet" href="/static/main.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 
 <body>
-    {% include 'header.html' %}
-    <div class="content">
-        <h1>Analyysit</h1>
-        {% for post in post_list %}
-        <div class="post_homepage">
-            <p>
-                <h3><a href='/post/{{ post.id }}'>{{post.title}}</a></h3><a href='/profile/{{post.user_id}}'>{{post.username}}</a> | {% if post.recommendation%}{{post.recommendation}} | {%endif%}{{post.likes}} tykkäystä | {{post.sent_at}} |
-            {% if post.market %}{{post.market}}{% endif %}
-            {% if post.industry %}{% if post.market %} | {% endif %}{{post.industry}}{% endif %}
-            {% if post.strategy %}{% if post.market or post.industry %} | {% endif %}{{post.strategy}}{% endif %}
-        </p>
-        </div>
-        {% endfor %}
+  {% include 'header.html' %}
+  <div class="content">
+    <h1>Analyysit</h1>
+    {% for post in post_list %}
+    <div class="post_homepage">
+      <p>
+        <h3>
+          <a href='/post/{{ post.id }}'>{{post.title}}</a>
+        </h3>
+        <a href='/profile/{{post.user_id}}'>{{post.username}}</a> | 
+        {% if post.recommendation%}{{post.recommendation}} | 
+        {%endif%}{{post.likes}} tykkäystä | 
+        {{post.sent_at}} |
+        {% if post.market %}{{post.market}}{% endif %}
+        {% if post.industry %}{% if post.market %} | {% endif %}{{post.industry}}{% endif %}
+        {% if post.strategy %}{% if post.market or post.industry %} | {% endif %}{{post.strategy}}{% endif %}
+    </p>
     </div>
+    {% endfor %}
+  </div>
 </body>
 
 </html>
