@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <body>
+    {% if all_posts %}
     <div class = 'ticker'>
         <div class ='ticker-titles'>
             {% for post in all_posts %}
-            <a href="/post/{{ post.id }}">{{ post.title }}</a>{% if not loop.last %} | {% endif %}
+            {% if post.recommendation == 'Osta' %}&#128200;{%elif post.recommendation == 'Myy' %}&#128201;{%elif post.recommendation =='Pidä'%}&#x23F3;{% endif %}<a href="/post/{{ post.id }}" class="ticker-{{ post.recommendation.lower() if post.recommendation else 'default' }}">{{ post.title }}</a>{% if not loop.last %} &#x2022; {% endif %}
             {% endfor %}
         </div>
     </div>
+    {% endif %}
     <div class ='header'>
         <h1><span style="color:blue">INVESTOR CLUB &#128184;</span></h1>
         {% if session.username %}

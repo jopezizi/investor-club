@@ -118,8 +118,8 @@ body {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: pink;
-  color: #fff;
+  background: lightgrey;
+  color: black;
   height: 36px;
   display: flex;
   align-items: center;
@@ -136,12 +136,34 @@ body {
 }
 
 .ticker a {
-  color: #fff;
+  color: black;
   text-decoration: none;
   padding: 0 16px;
 }
 
-.ticker a:hover { text-decoration: underline; }
+.ticker a.ticker-osta {
+  color: green;
+  font-weight: bold;
+}
+
+.ticker a.ticker-pidä {
+  color: blue;
+  font-weight: bold;
+}
+
+.ticker a.ticker-myy {
+  color: red;
+  font-weight: bold;
+}
+
+.ticker a.ticker-default {
+  color: #666;
+}
+
+.ticker a:hover { 
+  text-decoration: underline;
+  opacity: 0.8;
+}
 .sep { opacity: 0.6; }
 
 @keyframes ticker-scroll {
