@@ -19,6 +19,7 @@ body {
 .nav {
     margin: 1em;
 }
+
 .content {
 }
 
@@ -113,3 +114,37 @@ body {
     white-space: nowrap;
 }
 
+.ticker {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: pink;
+  color: #fff;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  font: 14px/1.2 system-ui, sans-serif;
+}
+
+
+.ticker-titles {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+  animation: ticker-scroll 20s linear infinite;
+  padding-left: 100%; 
+}
+
+.ticker a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0 16px;
+}
+
+.ticker a:hover { text-decoration: underline; }
+.sep { opacity: 0.6; }
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}

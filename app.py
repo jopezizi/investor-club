@@ -30,6 +30,11 @@ def require_login():
     if 'user_id' not in session:
         abort(403)
 
+@app.context_processor
+def inject_posts():
+    all_posts = posts.get_posts()
+    return dict(all_posts=all_posts)
+
 @app.route("/")
 def index():
     post_list = posts.get_posts()
