@@ -1,4 +1,18 @@
 import db
+import sqlite3
+
+def authenticate_user(username, password_hash):
+    sql = "SELECT password_hash, id FROM users WHERE username = ?"
+    user_info = db.query(sql, [username])
+    return user_info[0] if user_info else None
+
+def create_user(username, password_hash):
+    try:
+        sql = "INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, datetime('now', 'localtime'))"
+        db.execute(sql, [username, password_hash])
+        return True
+    except sqlite3.IntegrityError:
+        return False
 
 def get_user(user_id):
     sql = '''SELECT u.id, u.username, strftime('%d.%m.%Y', u.created_at) AS created_at,

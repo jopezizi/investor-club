@@ -1,7 +1,6 @@
 from flask import *
 from werkzeug.security import check_password_hash, generate_password_hash
 import config
-import sqlite3
 import db
 import posts, users
 import secrets
@@ -55,14 +54,13 @@ def login():
     username = request.form.get("username", "")
     password = request.form.get("password", "")
     
-    sql = "SELECT password_hash, id FROM users WHERE username = ?"
-    user_info = db.query(sql, [username])
+    user_info = users.authenticate_user(username, password)
 
     if not user_info:
         return render_template('login.html', error="Väärä tunnus tai salasana")
     
-    password_hash = user_info[0][0]
-    user_id = user_info[0][1]
+    password_hash = user_info[0]
+    user_id = user_info[1]
 
     if check_password_hash(password_hash, password):
         session["username"] = username
@@ -85,13 +83,10 @@ def create():
     
     password_hash = generate_password_hash(password1)
 
-    try:
-        sql = "INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, datetime('now', 'localtime'))"
-        db.execute(sql, [username, password_hash])
-    except sqlite3.IntegrityError:
+    if users.create_user(username, password_hash):
+        return render_template('register.html', error=None, success="Tunnus luotu! Voit kirjautua sisään.")
+    else:
         return render_template('register.html', error="Tunnus on jo varattu")
-
-    return render_template('register.html', error=None, success="Tunnus luotu! Voit kirjautua sisään.")
 
 @app.route("/logout")
 def logout():
