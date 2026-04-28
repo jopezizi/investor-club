@@ -1,14 +1,17 @@
-from flask import *
-from werkzeug.security import check_password_hash, generate_password_hash
-import config
-import posts, users
 import secrets
+
+from flask import Flask
+from flask import abort, make_response, redirect, render_template, request, session
+
 import markupsafe
+from werkzeug.security import check_password_hash, generate_password_hash
+
+import config
+import posts
+import users
 
 app = Flask(__name__)
-app.secret_key = config.secret_key
-
-
+app.secret_key = config.SECRET_KEY
 
 @app.before_request
 def check_csrf_token():
@@ -32,7 +35,7 @@ def require_login():
 @app.context_processor
 def inject_posts():
     all_posts = posts.get_posts()
-    return dict(all_posts = all_posts)
+    return {"all_posts": all_posts}
 
 @app.route("/")
 def index():
@@ -58,7 +61,7 @@ def login():
     username = request.form.get("username", "")
     password = request.form.get("password", "")
 
-    user_info = users.authenticate_user(username, password)
+    user_info = users.authenticate_user(username)
 
     if not user_info:
         return render_template('login.html', error = "Väärä tunnus tai salasana")
@@ -71,8 +74,7 @@ def login():
         session["user_id"] = user_id
         session['csrf_token'] = secrets.token_hex(16)
         return redirect("/")
-    else:
-        return render_template('login.html', error = "Väärä tunnus tai salasana")
+    return render_template('login.html', error = "Väärä tunnus tai salasana")
 
 @app.route("/create", methods = ["POST"])
 def create():
@@ -91,8 +93,7 @@ def create():
         return render_template('register.html',
                                error = None,
                                success = "Tunnus luotu! Voit kirjautua sisään.")
-    else:
-        return render_template('register.html', error = "Tunnus on jo varattu")
+    return render_template('register.html', error = "Tunnus on jo varattu")
 
 @app.route("/logout")
 def logout():
@@ -293,7 +294,8 @@ def profile(user_id):
     postlist = users.get_posts(user_id)
     recommendations = posts.get_recommendation_distribution(user_id)[0]
     likes = posts.get_user_total_likes(user_id)[0]
-    return render_template('profile.html', profile = prof, posts = postlist, recommendations = recommendations, likes = likes)
+    return render_template('profile.html', profile = prof, posts = postlist,
+                           recommendations = recommendations, likes = likes)
 
 @app.route("/add_profile_picture", methods = ["GET", "POST"])
 def add_profile_picture():
@@ -301,7 +303,7 @@ def add_profile_picture():
 
     if request.method == 'GET':
         return render_template('add_profile_picture.html', error = None)
-    
+
     if request.method == 'POST':
         check_csrf()
         file = request.files.get('image')
@@ -316,7 +318,7 @@ def add_profile_picture():
 
         user_id = session['user_id']
         users.update_profile_picture(user_id, image)
-        return redirect('/profile/' + str(user_id))        
+        return redirect('/profile/' + str(user_id))
     return redirect('/')
 
 @app.route("/delete_profile_picture", methods = ["POST"])
@@ -350,7 +352,7 @@ def toggle_like(post_id):
         posts.add_like(user_id, post_id)
         liked = True
     return redirect('/post/' + str(post_id))
-    
+
 
 @app.route('/post/<int:post_id>/update-recommendation', methods = ['POST'])
 def update_recommendation(post_id):
@@ -365,23 +367,23 @@ def update_recommendation(post_id):
 @app.route('/categories', methods = ['GET'])
 def categories():
     classes = posts.get_classes()
-    categories = []
-    for i in range(len(classes)):
-        categories.append([])
-        items = posts.get_category_items(classes[i][0])
+    categories_list = []
+    for i, class_item in enumerate(classes):
+        categories_list.append([])
+        items = posts.get_category_items(class_item[0])
         for cat in items:
-            categories[i].append(cat)
+            categories_list[i].append(cat)
     if request.method == 'GET':
-        return render_template('categories.html', classes = classes, categories = categories)
-    return render_template('categories.html', classes = classes, categories = categories)
-    
+        return render_template('categories.html', classes = classes, categories = categories_list)
+    return render_template('categories.html', classes = classes, categories = categories_list)
+
 @app.route('/categories/<int:category_id>', methods=['GET'])
 def show_category(category_id):
     info = posts.get_category_info(category_id)[0]
     class_name, cat_name = info[0], info[1]
     post_list = posts.get_posts_by_category(class_name, cat_name)
     return render_template('show_category.html', category = cat_name, post_list = post_list)
-    
+
 @app.route('/new_comment', methods=['POST'])
 def new_comment():
     check_csrf()

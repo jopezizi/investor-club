@@ -5,3 +5,4 @@ venv
 .DS_Store
 database.db-shm
 database.db-wal
+.pylintrc

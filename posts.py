@@ -19,9 +19,9 @@ def add_post(title, content, user_id, market, industry, strategy, recommendation
         '''
     db.execute(sql, [title, content, user_id, market, industry, strategy, recommendation, image])
     return db.last_insert_id()
-    
+
 def get_post(post_id):
-    sql = '''SELECT 
+    sql = '''SELECT
                 p.id, p.title, p.content, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, 
                 p.market, p.industry, p.strategy, p.recommendation, p.holds, p.image, u.image IS NOT NULL AS has_image
             FROM posts p
@@ -93,7 +93,7 @@ def update_recommendation(user_id, post_id, recommended, recommendation):
         sql = 'UPDATE posts SET buys = buys + ?, holds = holds + ?, sells = sells + ? WHERE id = ?'
         db.execute(sql, [buy, hold, sell, post_id])
         return
-    
+
     if old_recommendation is None:
         sql = 'INSERT INTO recommendations (user_id, post_id, recommendation) VALUES (?, ?, ?)'
         db.execute(sql, [user_id, post_id, recommendation])
@@ -103,7 +103,7 @@ def update_recommendation(user_id, post_id, recommended, recommendation):
 
 
 
-    
+
     if recommendation == 'buy':
         buy += 1
     elif recommendation == 'sell':
@@ -124,9 +124,9 @@ def get_category_items(category):
     sql = 'SELECT class, name, id FROM categories WHERE class = ? ORDER BY name'
     return db.query(sql, [category])
 
-def get_category_info(id):
+def get_category_info(category_id):
     sql = 'SELECT class, name FROM categories WHERE id = ?'
-    return db.query(sql, [id])
+    return db.query(sql, [category_id])
 
 
 def get_posts_by_category(cat_class, category):
@@ -139,7 +139,7 @@ def get_posts_by_category(cat_class, category):
     else:
         return []
 
-    sql = f'''SELECT 
+    sql = f'''SELECT
                 p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, 
                 p.sells, p.market, p.industry, p.strategy, p.recommendation, p.image
             FROM posts p
@@ -150,7 +150,7 @@ def get_posts_by_category(cat_class, category):
     return db.query(sql, [category])
 
 def get_comments(post_id):
-    sql = '''SELECT 
+    sql = '''SELECT
                 c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username 
             FROM comments c, users u 
             WHERE c.user_id = u.id AND c.post_id = ? 
@@ -158,15 +158,16 @@ def get_comments(post_id):
     return db.query(sql, [post_id])
 
 def get_comment(post_id, comment_id):
-    sql = '''SELECT 
+    sql = '''SELECT
                 c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username 
             FROM comments c, users u 
             WHERE c.user_id = u.id AND c.post_id = ? AND c.id = ?'''
     result = db.query(sql, [post_id, comment_id])
     return result[0] if result else None
-    
+
 def add_comment(content, user_id, post_id):
-    sql = '''INSERT INTO comments (content, sent_at, user_id, post_id) VALUES (?, datetime('now'), ?,?)'''
+    sql = '''INSERT INTO comments (content, sent_at, user_id, post_id)
+            VALUES (?, datetime('now'), ?,?)'''
     db.execute(sql, [content, user_id, post_id])
 
 def update_comment(comment_id, content):
