@@ -108,7 +108,10 @@ body {
     gap: 3px;
 }
 
-.post-category-info {
+.post_image img {
+    max-width: 65%;
+    width: 100%;
+    height: auto;
 }
 
 .rec-form {

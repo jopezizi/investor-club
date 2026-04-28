@@ -121,10 +121,12 @@ def create_post():
     industry = request.form.get('industry', '')
     strategy = request.form.get('strategy', '')
     recommendation = request.form.get('recommendation', '')
+    image_file = request.files.get('post_image')
+    image = image_file.read() if image_file and image_file.filename else None
     if not title or not content or len(title) > 100 or len(content) > 5000:
         abort(403)
     user_id = session['user_id']
-    post_id = posts.add_post(title, content, user_id, market, industry, strategy, recommendation)
+    post_id = posts.add_post(title, content, user_id, market, industry, strategy, recommendation, image)
     return redirect('/post/' + str(post_id))
 
 @app.route('/post/<int:post_id>')
@@ -141,6 +143,15 @@ def show_post(post_id):
         abort(404)
     comments = posts.get_comments(post_id)
     return render_template('post.html', post=post, comments=comments, liked=liked, current_recommendation=current_recommendation)
+
+@app.route('/post-image/<int:post_id>')
+def show_post_image(post_id):
+    post = posts.get_post(post_id)
+    if not post or not post['image']:
+        abort(404)
+    response = make_response(bytes(post['image']))
+    response.headers.set('Content-Type', 'image/jpeg')
+    return response
 
 
 @app.route('/search')
@@ -290,7 +301,9 @@ def add_profile_picture():
     
     if request.method == 'POST':
         check_csrf()
-        file = request.files['image']
+        file = request.files.get('image')
+        if not file or not file.filename:
+            return render_template('add_profile_picture.html', error = "väärä tiedostomuoto")
         if not file.filename.endswith('.jpg'):
             return render_template('add_profile_picture.html', error = "väärä tiedostomuoto")
 

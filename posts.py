@@ -1,7 +1,7 @@
 import db
 
 def get_posts() -> list:
-    sql = '''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation
+    sql = '''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.image
             FROM posts p
             JOIN users u ON P.user_id = u.id
             ORDER BY p.id DESC
@@ -9,15 +9,15 @@ def get_posts() -> list:
     return db.query(sql)
 
 
-def add_post(title, content, user_id, market, industry, strategy, recommendation):
+def add_post(title, content, user_id, market, industry, strategy, recommendation, image):
     sql = '''
-        INSERT INTO posts (title, content, sent_at, user_id, market, industry, strategy, recommendation) VALUES(?, ?, datetime('now', 'localtime'), ?, ?, ?, ?, ?)
+        INSERT INTO posts (title, content, sent_at, user_id, market, industry, strategy, recommendation, image) VALUES(?, ?, datetime('now', 'localtime'), ?, ?, ?, ?, ?, ?)
         '''
-    db.execute(sql, [title, content, user_id, market, industry, strategy, recommendation])
+    db.execute(sql, [title, content, user_id, market, industry, strategy, recommendation, image])
     return db.last_insert_id()
     
 def get_post(post_id):
-    sql = '''SELECT p.id, p.title, p.content, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.holds, u.image IS NOT NULL AS has_image
+    sql = '''SELECT p.id, p.title, p.content, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.holds, p.image, u.image IS NOT NULL AS has_image
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE p.id = ?
@@ -133,7 +133,7 @@ def get_posts_by_category(cat_class, category):
     else:
         return []
 
-    sql = f'''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation
+    sql = f'''SELECT p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market, p.industry, p.strategy, p.recommendation, p.image
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE {where}
@@ -161,7 +161,7 @@ def update_comment(comment_id, content):
 def remove_comment(comment_id):
     sql = 'DELETE FROM comments WHERE id = ?'
     db.execute(sql, [comment_id])
-    
+
 def get_recommendation_distribution(user_id):
     sql = '''SELECT
                 COALESCE(SUM(CASE WHEN recommendation = 'Osta' THEN 1 ELSE 0 END),0) AS buys,

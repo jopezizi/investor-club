@@ -73,11 +73,14 @@
       <a href="/remove/{{ post.id }}">Poista</a>
     </p>
     {% endif %}
+    {% if post.image %}
+    <p class = "post_image">
+      <img src="/post-image/{{ post.id }}"/>
+    </p>
+    {% endif %}
     <p class = 'post_text'>
       {{ post.content | show_lines }}
     </p>
-
-    
 
     {% if session.user_id %}
     <h2>Kommentoi</h2>
