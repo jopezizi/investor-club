@@ -2,8 +2,9 @@ import sqlite3
 from flask import g
 
 def get_connection():
-    con = sqlite3.connect("database.db")
+    con = sqlite3.connect("database.db", timeout=10.0, check_same_thread=False)
     con.execute("PRAGMA foreign_keys = ON")
+    con.execute("PRAGMA journal_mode = WAL")
     con.row_factory = sqlite3.Row
     return con
 

@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <div class ='header'>
-            <h1><span style="color:blue">INVESTOR CLUB &#128184;</span></h1>
-            {% if session.username %}
-            <p>
-                Olet kirjautunut nimellä {{ session.username }}
-            </p>
-            <p>
-                <a href="/logout"><button>Kirjaudu ulos</button></a>
-            </p>
-            {% else %}
-            <p>
-                <a href="/login"><button>Kirjaudu sisään</button></a>
-                <a href="/register"><button>Luo uusi käyttäjä</button></a>
-            </p>
-            {% endif %}
-            <hr>
-        </div>
-        <div class = 'nav'>
-            <a href="/"><button>Etusivu</button></a>
-            {% if session.username %}
-            <a href="/new_post"><button>Uusi julkaisu</button></a>
-            {% endif %}
-            <a href="/categories"><button>Kategoriat</button></a>
-            <a href="/search"><button>Hae julkaisuja</button></a>
-            {% if session.username %}
-            <a href="/profile/{{ session.user_id }}"><button>Oma profiili</button></a>
-            {% endif %}
-            <hr />
-        </div>
-    </body>
+<body>
+    <div class ='header'>
+        <h1><span style="color:blue">INVESTOR CLUB &#128184;</span></h1>
+        {% if session.username %}
+        <p>
+            Olet kirjautunut nimellä {{ session.username }}
+        </p>
+        <p>
+            <a href="/logout"><button>Kirjaudu ulos</button></a>
+        </p>
+        {% else %}
+        <p>
+            <a href="/login"><button>Kirjaudu sisään</button></a>
+            <a href="/register"><button>Luo uusi käyttäjä</button></a>
+        </p>
+        {% endif %}
+        <hr>
+    </div>
+    <div class = 'nav'>
+        <a href="/"><button>Etusivu</button></a>
+        {% if session.username %}
+        <a href="/new_post"><button>Uusi julkaisu</button></a>
+        {% endif %}
+        <a href="/categories"><button>Kategoriat</button></a>
+        <a href="/search"><button>Hae julkaisuja</button></a>
+        {% if session.username %}
+        <a href="/profile/{{ session.user_id }}"><button>Oma profiili</button></a>
+        {% endif %}
+        <hr />
+    </div>
+</body>
 </html>

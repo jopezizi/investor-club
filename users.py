@@ -2,7 +2,7 @@ import db
 
 def get_user(user_id):
     sql = '''SELECT u.id, u.username, strftime('%d.%m.%Y', u.created_at) AS created_at,
-            timediff(datetime('now', 'localtime'), u.created_at) AS ago, u.image IS NOT NULL has_image
+            CAST((JULIANDAY('now') - JULIANDAY(u.created_at)) AS INTEGER) AS ago, u.image IS NOT NULL has_image
             FROM users u
             WHERE u.id = ?
             '''
