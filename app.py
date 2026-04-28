@@ -1,7 +1,6 @@
 from flask import *
 from werkzeug.security import check_password_hash, generate_password_hash
 import config
-import db
 import posts, users
 import secrets
 import markupsafe

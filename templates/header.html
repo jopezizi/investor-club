@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <div class='header'>
-        <div class='header-top'>
-            <h1><span class="main_title">INVESTOR CLUB &#128184;</span></h1>
-            <a href="/search"><button>Hae julkaisuja</button></a>
-            {% if session.username %}
-            <p>
-                Olet kirjautunut nimellä {{ session.username }}
-            </p>
-            {% else %}
-            <p>
-                <a href="/login"><button>Kirjaudu sisään</button></a>
-                <a href="/register"><button>Luo uusi käyttäjä</button></a>
-            </p>
-            {% endif %}
+        <div class='header'>
+                <div class='header-top'>
+                        <h1><span class="main_title">INVESTOR CLUB &#128184;</span></h1>
+                        <a href="/search"><button>Hae julkaisuja</button></a>
+                        {% if session.username %}
+                        <p>
+                                Olet kirjautunut nimellä {{ session.username }}
+                        </p>
+                        {% else %}
+                        <p>
+                                <a href="/login"><button>Kirjaudu sisään</button></a>
+                                <a href="/register"><button>Luo uusi käyttäjä</button></a>
+                        </p>
+                        {% endif %}
+                </div>
+                <div class='nav'>
+                        <a href="/"><button>Etusivu</button></a>
+                        {% if session.username %}
+                        <a href="/new_post"><button>Uusi julkaisu</button></a>
+                        {% endif %}
+                        <a href="/categories"><button>Kategoriat</button></a>
+                        {% if session.username %}
+                        <a href="/profile/{{ session.user_id }}"><button>Oma profiili</button></a>
+                        <a href="/logout"><button>Kirjaudu ulos</button></a>
+                        {% endif %}
+                </div>
         </div>
-        <div class='nav'>
-            <a href="/"><button>Etusivu</button></a>
-            {% if session.username %}
-            <a href="/new_post"><button>Uusi julkaisu</button></a>
-            {% endif %}
-            <a href="/categories"><button>Kategoriat</button></a>
-            {% if session.username %}
-            <a href="/profile/{{ session.user_id }}"><button>Oma profiili</button></a>
-            <a href="/logout"><button>Kirjaudu ulos</button></a>
-            {% endif %}
+        {% if all_posts %}
+        <div class = 'ticker'>
+                <div class ='ticker-titles'>
+                        {% for post in all_posts %}
+                        {% if post.recommendation == 'Osta' %}&#128200;{%elif post.recommendation == 'Myy' %}&#128201;{%elif post.recommendation =='Pidä'%}&#x23F3;{% endif %}<a href="/post/{{ post.id }}" class="ticker-{{ post.recommendation.lower() if post.recommendation else 'default' }}">{{ post.title }}</a>{% if not loop.last %} &#x2022; {% endif %}
+                        {% endfor %}
+                </div>
+        {% endif %}
         </div>
-    </div>
-    {% if all_posts %}
-    <div class = 'ticker'>
-        <div class ='ticker-titles'>
-            {% for post in all_posts %}
-            {% if post.recommendation == 'Osta' %}&#128200;{%elif post.recommendation == 'Myy' %}&#128201;{%elif post.recommendation =='Pidä'%}&#x23F3;{% endif %}<a href="/post/{{ post.id }}" class="ticker-{{ post.recommendation.lower() if post.recommendation else 'default' }}">{{ post.title }}</a>{% if not loop.last %} &#x2022; {% endif %}
-            {% endfor %}
-        </div>
-    {% endif %}
-    </div>
 </body>
 </html>

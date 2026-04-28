@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Muokkaa kommenttia</title>
-  <link rel="stylesheet" href="/static/main.css">
-  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <title>Muokkaa kommenttia</title>
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 <body>
-  {% include 'header.html' %}
-  <div class="page">
-  <form action="/edit/{{ post.id }}/{{comment.id}}" method="post">
-    <p>
-      Muokkaa kommenttiasi julkaisussa <span class="remove_edit_post_title">{{ post.title }}</span>
-    </p>
-    <p>
-      Sisältö:<br />
-      <textarea name="content" rows="5" cols="40">{{ comment.content }}</textarea>
-    </p>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" name='continue' value="Lähetä" />
-    <input type="submit" name="cancel" value="Peruuta" />
-  </form>
-  </div>
+    {% include 'header.html' %}
+    <div class="page">
+    <form action="/edit/{{ post.id }}/{{comment.id}}" method="post">
+        <p>
+            Muokkaa kommenttiasi julkaisussa <span class="remove_edit_post_title">{{ post.title }}</span>
+        </p>
+        <p>
+            Sisältö:<br />
+            <textarea name="content" rows="5" cols="40">{{ comment.content }}</textarea>
+        </p>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="submit" name='continue' value="Lähetä" />
+        <input type="submit" name="cancel" value="Peruuta" />
+    </form>
+    </div>
 </body>
 </html>

@@ -1,331 +1,331 @@
 body {
-    margin: auto;
-    max-width: 200em;
-    font-family: Arial, Helvetica, sans-serif
+        margin: auto;
+        max-width: 200em;
+        font-family: Arial, Helvetica, sans-serif
 }
 
 .page {
-    margin: 1em;
+        margin: 1em;
 }
 
 .page h1 {
-    margin-bottom: 0.3em;
-    margin: 0;
+        margin-bottom: 0.3em;
+        margin: 0;
 }
 
 .title_and_rec {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
 }
 
 .title_and_rec h1 {
-    flex: 1;
+        flex: 1;
 }
 
 .header {
-  display: flex;
-  flex-direction: column;
-  padding: 15px;
-  gap: 10px;
-  background: #222;
-  color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 10px;
+    background: #222;
+    color: white;
 }
 
 .header-top {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
 }
 
 .header-top h1 {
-  margin: 0;
-  flex: 1;
+    margin: 0;
+    flex: 1;
 }
 
 .header-top p {
-  margin: 0;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  white-space: nowrap;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    white-space: nowrap;
 }
 
 .main_title{
-    color:white;
+        color:white;
 }
 .nav {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .content {
 }
 
 .content h1 {
-    margin-left: 0.5em;
+        margin-left: 0.5em;
 }
 
 .post_homepage {
-    border: 2px solid grey;
-    margin: 1em;
-    padding: 0.2em 0.5em;
+        border: 2px solid grey;
+        margin: 1em;
+        padding: 0.2em 0.5em;
 }
 
 .error {
-    color: red; 
-    border: 1px solid red;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #ffe6e6;
+        color: red; 
+        border: 1px solid red;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #ffe6e6;
 }
 
 .success {
-    color: green; 
-    border: 1px solid green; 
-    padding: 10px; 
-    margin: 10px 0; 
-    background-color: #e6ffe6;
+        color: green; 
+        border: 1px solid green; 
+        padding: 10px; 
+        margin: 10px 0; 
+        background-color: #e6ffe6;
 }
 
 .profile-info {
-    display:flex;
-    align-items:center;
-    gap: 10px;
+        display:flex;
+        align-items:center;
+        gap: 10px;
 }
 
 .profile-info-image {
-    height: 36px;
-    width: 36px;
+        height: 36px;
+        width: 36px;
 }
 
 .profile-info-texts {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
 }
 
 .post_image img {
-    max-width: 65%;
-    width: 100%;
-    height: auto;
+        max-width: 65%;
+        width: 100%;
+        height: auto;
 }
 
 .rec-form {
-    margin: 0;
+        margin: 0;
 }
 
 .recommendation-select {
-    padding: 5px 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 14px;
-    cursor: pointer;
-    background-color: white;
-    color: #333;
+        padding: 5px 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 14px;
+        cursor: pointer;
+        background-color: white;
+        color: #333;
 }
 
 .recommendation-select.recommendation-osta {
-    color: green;
-    border-color: green;
-    background-color: #e6ffe6;
+        color: green;
+        border-color: green;
+        background-color: #e6ffe6;
 }
 
 .recommendation-select.recommendation-pidä {
-    color: blue;
-    border-color: blue;
-    background-color: lightskyblue;
+        color: blue;
+        border-color: blue;
+        background-color: lightskyblue;
 }
 
 .recommendation-select.recommendation-myy {
-    color: red;
-    border-color: red;
-    background-color: #ffe6e6;
+        color: red;
+        border-color: red;
+        background-color: #ffe6e6;
 }
 
 .recommendation-select.recommendation-none {
-    color: #666;
-    border-color: #ccc;
+        color: #666;
+        border-color: #ccc;
 }
 
 .buy-recommendation-box {
-    display: inline-block;
-    color: green; 
-    border: 1px solid green;
-    padding: 5px 8px;
-    margin: 0;
-    background-color: #e6ffe6;
-    font-size: 14px;
-    white-space: nowrap;
+        display: inline-block;
+        color: green; 
+        border: 1px solid green;
+        padding: 5px 8px;
+        margin: 0;
+        background-color: #e6ffe6;
+        font-size: 14px;
+        white-space: nowrap;
 }
 
 .sell-recommendation-box {
-    display: inline-block;
-    color: red; 
-    border: 1px solid red;
-    padding: 5px 8px;
-    margin: 0;
-    background-color: #ffe6e6;
-    font-size: 14px;
-    white-space: nowrap;
+        display: inline-block;
+        color: red; 
+        border: 1px solid red;
+        padding: 5px 8px;
+        margin: 0;
+        background-color: #ffe6e6;
+        font-size: 14px;
+        white-space: nowrap;
 }
 
 .hold-recommendation-box {
-    display: inline-block;
-    color: blue; 
-    border: 1px solid blue;
-    padding: 5px 8px;
-    margin: 0;
-    background-color: lightskyblue;
-    font-size: 14px;
-    white-space: nowrap;
+        display: inline-block;
+        color: blue; 
+        border: 1px solid blue;
+        padding: 5px 8px;
+        margin: 0;
+        background-color: lightskyblue;
+        font-size: 14px;
+        white-space: nowrap;
 }
 
 .reactions {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-wrap: wrap;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
 }
 
 .post_text {
-    font-size: 20px;
+        font-size: 20px;
 }
 
 .recommendation-form {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin: 0;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin: 0;
 }
 
 .recommendation-form label {
-    font-weight: bold;
-    margin-right: 10px;
+        font-weight: bold;
+        margin-right: 10px;
 }
 
 .recommendation-dropdown {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    background-color: white;
-    color: #333;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        background-color: white;
+        color: #333;
 }
 
 .recommendation-dropdown:hover {
-    border-color: #999;
+        border-color: #999;
 }
 
 .recommendation-fieldset {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
 }
 
 .recommendation-fieldset legend {
-    font-size: 14px;
-    font-weight: bold;
-    padding: 0 5px;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 0 5px;
 }
 
 .recommendation-options {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    align-items: center;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: center;
 }
 
 .radio-label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        white-space: nowrap;
 }
 
 .radio-label input[type="radio"] {
-    cursor: pointer;
+        cursor: pointer;
 }
 
 .clear-btn {
-    padding: 5px 8px;
-    font-size: 12px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    cursor: pointer;
+        padding: 5px 8px;
+        font-size: 12px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        cursor: pointer;
 }
 
 .clear-btn:hover {
-    background-color: #ddd;
+        background-color: #ddd;
 }
 
 .remove_edit_post_title {
-    font-weight: bold;
-    font-style: italic;
-    display: inline;
-    white-space: nowrap;
+        font-weight: bold;
+        font-style: italic;
+        display: inline;
+        white-space: nowrap;
 }
 
 .ticker {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background: lightgrey;
-  color: black;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  font: 14px/1.2 system-ui, sans-serif;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: lightgrey;
+    color: black;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    font: 14px/1.2 system-ui, sans-serif;
 }
 
 
 .ticker-titles {
-  display: inline-block;
-  white-space: nowrap;
-  will-change: transform;
-  animation: ticker-scroll 20s linear infinite;
-  padding-left: 100%; 
+    display: inline-block;
+    white-space: nowrap;
+    will-change: transform;
+    animation: ticker-scroll 20s linear infinite;
+    padding-left: 100%; 
 }
 
 .ticker a {
-  color: black;
-  text-decoration: none;
-  padding: 0 12px;
+    color: black;
+    text-decoration: none;
+    padding: 0 12px;
 }
 
 .ticker a.ticker-osta {
-  color: green;
-  font-weight: bold;
+    color: green;
+    font-weight: bold;
 }
 
 .ticker a.ticker-pidä {
-  color: blue;
-  font-weight: bold;
+    color: blue;
+    font-weight: bold;
 }
 
 .ticker a.ticker-myy {
-  color: red;
-  font-weight: bold;
+    color: red;
+    font-weight: bold;
 }
 
 .ticker a.ticker-default {
-  color: #666;
+    color: #666;
 }
 
 .ticker a:hover { 
-  text-decoration: underline;
-  opacity: 0.8;
+    text-decoration: underline;
+    opacity: 0.8;
 }
 .sep { opacity: 0.6; }
 
 @keyframes ticker-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
 }

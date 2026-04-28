@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Muokkaa julkaisua</title>
-  <link rel="stylesheet" href="/static/main.css">
-  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <title>Muokkaa julkaisua</title>
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 <body>
-  {% include 'header.html' %}
-  <div class="page">
-  <form action="/edit/{{ post.id }}" method="post">
-    <p>
-      Muokkaa julkaisuasi <span class="remove_edit_post_title">{{ post.title }}</span>
-    </p>
-    <p>
-      Otsikko:<br />
-      <input type="text" name="title" value="{{ post.title }}" />
-    </p>
-    <p>
-      Sisältö:<br />
-      <textarea name="content" rows="5" cols="40">{{ post.content }}</textarea>
-    </p>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" name='continue' value="Lähetä" />
-    <input type="submit" name="cancel" value="Peruuta" />
-  </form>
-  </div>
+    {% include 'header.html' %}
+    <div class="page">
+    <form action="/edit/{{ post.id }}" method="post">
+        <p>
+            Muokkaa julkaisuasi <span class="remove_edit_post_title">{{ post.title }}</span>
+        </p>
+        <p>
+            Otsikko:<br />
+            <input type="text" name="title" value="{{ post.title }}" />
+        </p>
+        <p>
+            Sisältö:<br />
+            <textarea name="content" rows="5" cols="40">{{ post.content }}</textarea>
+        </p>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="submit" name='continue' value="Lähetä" />
+        <input type="submit" name="cancel" value="Peruuta" />
+    </form>
+    </div>
 </body>
 </html>

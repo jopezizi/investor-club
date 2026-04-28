@@ -2,48 +2,48 @@
 <html>
 
 <head>
-  <title>Käyttäjätunnuksen rekisteröinti</title>
-  <link rel="stylesheet" href="/static/main.css">
-  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <title>Käyttäjätunnuksen rekisteröinti</title>
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 
 <body>
-  {% include 'header.html' %}
-  <div class="page">
-  <h1>Luo uusi käyttäjä</h1>
+    {% include 'header.html' %}
+    <div class="page">
+    <h1>Luo uusi käyttäjä</h1>
 
-  {% if error %}
-  <div class ="error">
-    <strong>VIRHE:</strong> {{ error }}
-  </div>
-  {% endif %}
+    {% if error %}
+    <div class ="error">
+        <strong>VIRHE:</strong> {{ error }}
+    </div>
+    {% endif %}
 
-  {% if success %}
-  <div class="success">
-    <strong>Onnistui:</strong> {{ success }}
-  </div>
-  <p>
-    <a href="/login"><button>Siirry kirjautumiseen</button></a>
-  </p>
-  {% else %}
-  <form action="/create" method="post">
+    {% if success %}
+    <div class="success">
+        <strong>Onnistui:</strong> {{ success }}
+    </div>
     <p>
-      Tunnus: <br />
-      <input type="text" name="username" required/>
+        <a href="/login"><button>Siirry kirjautumiseen</button></a>
     </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password1" required/>
-    </p>
-    <p>
-      Salasana uudestaan: <br />
-      <input type="password" name="password2" required/>
-    </p>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Luo tunnus" />
-  </form>
-  {% endif %}
-  </div>
+    {% else %}
+    <form action="/create" method="post">
+        <p>
+            Tunnus: <br />
+            <input type="text" name="username" required/>
+        </p>
+        <p>
+            Salasana: <br />
+            <input type="password" name="password1" required/>
+        </p>
+        <p>
+            Salasana uudestaan: <br />
+            <input type="password" name="password2" required/>
+        </p>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="submit" value="Luo tunnus" />
+    </form>
+    {% endif %}
+    </div>
 </body>
 
 </html>

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Poista kommentti</title>
-  <link rel="stylesheet" href="/static/main.css">
+    <title>Poista kommentti</title>
+    <link rel="stylesheet" href="/static/main.css">
 </head>
 <body>
-  {% include 'header.html' %}
-  <div class="page">
-  <form action="/remove/{{ post.id }}/{{ comment.id }}" method="post">
+    {% include 'header.html' %}
+    <div class="page">
+    <form action="/remove/{{ post.id }}/{{ comment.id }}" method="post">
 <p>
-      Haluatko varmasti poistaa kommenttisi julkaisussa <span class="remove_edit_post_title">{{ post.title }}</span> ?
-    </p>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" name="continue" value="Jatka" />
-    <input type="submit" name="cancel" value="Peruuta" />
-  </form>
-  </div>
+            Haluatko varmasti poistaa kommenttisi julkaisussa <span class="remove_edit_post_title">{{ post.title }}</span> ?
+        </p>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="submit" name="continue" value="Jatka" />
+        <input type="submit" name="cancel" value="Peruuta" />
+    </form>
+    </div>
 </body>
 </html>

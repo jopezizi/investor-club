@@ -2,40 +2,40 @@
 <html>
 
 <head>
-  <title>Kirjautuminen</title>
-  <link rel="stylesheet" href="/static/main.css">
-  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <title>Kirjautuminen</title>
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 
 <body>
-  {% include 'header.html' %}
-  <div class="page">
-  <h1>Kirjautuminen</h1>
+    {% include 'header.html' %}
+    <div class="page">
+    <h1>Kirjautuminen</h1>
 
-  {% if error %}
-  <div class="error">
-    <strong>VIRHE:</strong> {{ error }}
-  </div>
-  {% endif %}
+    {% if error %}
+    <div class="error">
+        <strong>VIRHE:</strong> {{ error }}
+    </div>
+    {% endif %}
 
-  <form action="/login" method="post">
+    <form action="/login" method="post">
+        <p>
+            Tunnus: <br />
+            <input type="text" name="username" required/>
+        </p>
+        <p>
+            Salasana: <br />
+            <input type="password" name="password" required/>
+        </p>
+        <input type="submit" value="Kirjaudu" />
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    </form>
+
     <p>
-      Tunnus: <br />
-      <input type="text" name="username" required/>
+        Eikö sinulla ole tunnusta? 
+        <a href="/register"><button>Luo uusi käyttäjä</button></a>
     </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password" required/>
-    </p>
-    <input type="submit" value="Kirjaudu" />
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-  </form>
-
-  <p>
-    Eikö sinulla ole tunnusta? 
-    <a href="/register"><button>Luo uusi käyttäjä</button></a>
-  </p>
-  </div>
+    </div>
 </body>
 
 </html>

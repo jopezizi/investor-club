@@ -2,111 +2,111 @@
 <html>
 
 <head>
-  <title>Julkaisu</title>
-  <link rel="stylesheet" href="/static/main.css">
-  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <title>Julkaisu</title>
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 
 <body>
-  {% include 'header.html' %}
-  <div class="page">
-    <div class="title_and_rec">
-    {% if post.recommendation == 'Osta'%}
-    <h3 class="buy-recommendation-box">{{ post.recommendation }}</h3>
-    {% elif post.recommendation == 'Myy'%}
-    <h3 class="sell-recommendation-box">{{ post.recommendation }}</h3>
-    {% elif post.recommendation == 'Pidä'%}
-    <h3 class="hold-recommendation-box">{{ post.recommendation }}</h3>
-    {% endif %}
-    <h1>{{ post.title }}</h1>
-    </div>
-    <div class="profile-info">
-      {% if post.has_image %}
-      <img class="profile-info-image" src="/pfp/{{post.user_id}}">
-      {% else %}
-      <img class="profile-info-image" src="/static/default_pfp.svg">
-      {% endif %}
-      <div class="profile-info-texts">
-        <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b>
-        {{ post.sent_at }}
-      </div>
-    </div>
-    {% if post.market or post.industry or post.strategy %}
-    <p class="post-category-info">
-      {% if post.market %}<i>{{post.market}}</i>{% endif %}
-      {% if post.industry %}{% if post.market %} | {% endif %}<i>{{post.industry}}</i>{% endif %}
-      {% if post.strategy %}{% if post.market or post.industry %} | {% endif %}<i>{{post.strategy}}</i>{% endif %}
-    </p>
-    {% endif %}
-
-    {% if session.user_id %}
-    <div class="reactions">
-      <form action="/post/{{post.id}}/toggle-like" method="post">
-        {% if liked %}
-        <button>&#128078; Poista tykkäys &bull; {{post.likes}}</button>
-        {% else %}
-        <button>&#128077; Tykkää &bull; {{post.likes}}</button>
+    {% include 'header.html' %}
+    <div class="page">
+        <div class="title_and_rec">
+        {% if post.recommendation == 'Osta'%}
+        <h3 class="buy-recommendation-box">{{ post.recommendation }}</h3>
+        {% elif post.recommendation == 'Myy'%}
+        <h3 class="sell-recommendation-box">{{ post.recommendation }}</h3>
+        {% elif post.recommendation == 'Pidä'%}
+        <h3 class="hold-recommendation-box">{{ post.recommendation }}</h3>
         {% endif %}
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-      </form>
+        <h1>{{ post.title }}</h1>
+        </div>
+        <div class="profile-info">
+            {% if post.has_image %}
+            <img class="profile-info-image" src="/pfp/{{post.user_id}}">
+            {% else %}
+            <img class="profile-info-image" src="/static/default_pfp.svg">
+            {% endif %}
+            <div class="profile-info-texts">
+                <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b>
+                {{ post.sent_at }}
+            </div>
+        </div>
+        {% if post.market or post.industry or post.strategy %}
+        <p class="post-category-info">
+            {% if post.market %}<i>{{post.market}}</i>{% endif %}
+            {% if post.industry %}{% if post.market %} | {% endif %}<i>{{post.industry}}</i>{% endif %}
+            {% if post.strategy %}{% if post.market or post.industry %} | {% endif %}<i>{{post.strategy}}</i>{% endif %}
+        </p>
+        {% endif %}
 
-      {% if post.user_id != session.user_id %}
-      <form action="/post/{{post.id}}/update-recommendation" method="post" class="recommendation-form">
-        <label>Suosituksesi:</label>
-        <select name="recommendation" onchange="this.form.submit()" class="recommendation-dropdown">
-          <option value="">Valitse suositus</option>
-          <option value="buy">Osta &bull; {{post.buys}}</option>
-          <option value="hold">Pidä &bull; {{post.holds}}</option>
-          <option value="sell">Myy &bull; {{post.sells}}</option>
-          {% if current_recommendation %}
-          <option value="clear">Poista valinta</option>
-          {% endif %}
-        </select>
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-      </form>
-      {% endif %}
+        {% if session.user_id %}
+        <div class="reactions">
+            <form action="/post/{{post.id}}/toggle-like" method="post">
+                {% if liked %}
+                <button>&#128078; Poista tykkäys &bull; {{post.likes}}</button>
+                {% else %}
+                <button>&#128077; Tykkää &bull; {{post.likes}}</button>
+                {% endif %}
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            </form>
+
+            {% if post.user_id != session.user_id %}
+            <form action="/post/{{post.id}}/update-recommendation" method="post" class="recommendation-form">
+                <label>Suosituksesi:</label>
+                <select name="recommendation" onchange="this.form.submit()" class="recommendation-dropdown">
+                    <option value="">Valitse suositus</option>
+                    <option value="buy">Osta &bull; {{post.buys}}</option>
+                    <option value="hold">Pidä &bull; {{post.holds}}</option>
+                    <option value="sell">Myy &bull; {{post.sells}}</option>
+                    {% if current_recommendation %}
+                    <option value="clear">Poista valinta</option>
+                    {% endif %}
+                </select>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            </form>
+            {% endif %}
+        </div>
+        {% endif %}
+        {%if post.user_id == session.user_id %}
+        <p>
+            <a href="/edit/{{ post.id }}">Muokkaa</a> |
+            <a href="/remove/{{ post.id }}">Poista</a>
+        </p>
+        {% endif %}
+        {% if post.image %}
+        <p class = "post_image">
+            <img src="/post-image/{{ post.id }}"/>
+        </p>
+        {% endif %}
+        <p class = 'post_text'>
+            {{ post.content | show_lines }}
+        </p>
+
+        {% if session.user_id %}
+        <h2>Kommentoi</h2>
+        <form action="/new_comment" method="post">
+            <p>
+                Kirjoita kommenttisi tähän:<br />
+                <textarea name="content" rows="5" cols="40"></textarea>
+            </p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            <input type="hidden" name="post_id" value="{{ post.id }}" />
+            <input type="submit" value="Lähetä" />
+        </form>
+        {% endif %}
+        <h2>Kommentit</h2>
+        {% for comment in comments %}
+        <p class = "comment_info">
+            <b><a href="/profile/{{ comment.user_id }}">{{comment.username}}</a></b> ({{comment.sent_at}})
+            {%if comment.user_id == session.user_id %}
+                <a href="/edit/{{post.id}}/{{ comment.id }}">Muokkaa</a> |
+                <a href="/remove/{{post.id}}/{{ comment.id }}">Poista</a>
+            {% endif %}
+        <p>
+            {{comment.content | show_lines }}
+        </p>
+
+        {% endfor %}
     </div>
-    {% endif %}
-    {%if post.user_id == session.user_id %}
-    <p>
-      <a href="/edit/{{ post.id }}">Muokkaa</a> |
-      <a href="/remove/{{ post.id }}">Poista</a>
-    </p>
-    {% endif %}
-    {% if post.image %}
-    <p class = "post_image">
-      <img src="/post-image/{{ post.id }}"/>
-    </p>
-    {% endif %}
-    <p class = 'post_text'>
-      {{ post.content | show_lines }}
-    </p>
-
-    {% if session.user_id %}
-    <h2>Kommentoi</h2>
-    <form action="/new_comment" method="post">
-      <p>
-        Kirjoita kommenttisi tähän:<br />
-        <textarea name="content" rows="5" cols="40"></textarea>
-      </p>
-      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-      <input type="hidden" name="post_id" value="{{ post.id }}" />
-      <input type="submit" value="Lähetä" />
-    </form>
-    {% endif %}
-    <h2>Kommentit</h2>
-    {% for comment in comments %}
-    <p class = "comment_info">
-      <b><a href="/profile/{{ comment.user_id }}">{{comment.username}}</a></b> ({{comment.sent_at}})
-      {%if comment.user_id == session.user_id %}
-        <a href="/edit/{{post.id}}/{{ comment.id }}">Muokkaa</a> |
-        <a href="/remove/{{post.id}}/{{ comment.id }}">Poista</a>
-      {% endif %}
-    <p>
-      {{comment.content | show_lines }}
-    </p>
-
-    {% endfor %}
-  </div>
 </body>
 </html>
