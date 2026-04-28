@@ -145,10 +145,23 @@ def get_comments(post_id):
     sql = '''SELECT c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username FROM comments c, users u WHERE c.user_id = u.id AND c.post_id = ? ORDER BY c.id DESC'''
     return db.query(sql, [post_id])
 
+def get_comment(post_id, comment_id):
+    sql = '''SELECT c.id, c.content, strftime('%d.%m.%Y %H:%M', c.sent_at) AS sent_at, c.user_id, u.username FROM comments c, users u WHERE c.user_id = u.id AND c.post_id = ? AND c.id = ?'''
+    result = db.query(sql, [post_id, comment_id])
+    return result[0] if result else None
+    
 def add_comment(content, user_id, post_id):
     sql = '''INSERT INTO comments (content, sent_at, user_id, post_id) VALUES (?, datetime('now'), ?,?)'''
     db.execute(sql, [content, user_id, post_id])
 
+def update_comment(comment_id, content):
+    sql = "UPDATE comments SET content = ? WHERE id = ?"
+    db.execute(sql, [content, comment_id])
+
+def remove_comment(comment_id):
+    sql = 'DELETE FROM comments WHERE id = ?'
+    db.execute(sql, [comment_id])
+    
 def get_recommendation_distribution(user_id):
     sql = '''SELECT
                 COALESCE(SUM(CASE WHEN recommendation = 'Osta' THEN 1 ELSE 0 END),0) AS buys,

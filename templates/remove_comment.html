@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Poista julkaisu</title>
+  <title>Poista kommentti</title>
   <link rel="stylesheet" href="/static/main.css">
 </head>
 <body>
   {% include 'header.html' %}
   <div class="page">
-  <form action="/remove/{{ post.id }}" method="post">
+  <form action="/remove/{{ post.id }}/{{ comment.id }}" method="post">
 <p>
-      Haluatko varmasti poistaa julkaisun <span class="remove_edit_post_title">{{ post.title }}</span> ?
+      Haluatko varmasti poistaa kommenttisi julkaisussa <span class="remove_edit_post_title">{{ post.title }}</span> ?
     </p>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name="continue" value="Jatka" />

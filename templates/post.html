@@ -73,8 +73,7 @@
       <a href="/remove/{{ post.id }}">Poista</a>
     </p>
     {% endif %}
-    <hr>
-    <p>
+    <p class = 'post_text'>
       {{ post.content | show_lines }}
     </p>
 
@@ -94,9 +93,12 @@
     {% endif %}
     <h2>Kommentit</h2>
     {% for comment in comments %}
-    <p>
+    <p class = "comment_info">
       <b><a href="/profile/{{ comment.user_id }}">{{comment.username}}</a></b> ({{comment.sent_at}})
-    </p>
+      {%if comment.user_id == session.user_id %}
+        <a href="/edit/{{post.id}}/{{ comment.id }}">Muokkaa</a> |
+        <a href="/remove/{{post.id}}/{{ comment.id }}">Poista</a>
+      {% endif %}
     <p>
       {{comment.content | show_lines }}
     </p>

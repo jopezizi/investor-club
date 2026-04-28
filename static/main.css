@@ -101,3 +101,15 @@ body {
 .reactions {
     display: flex;
 }
+
+.post_text {
+    font-size: 20px;
+}
+
+.remove_edit_post_title {
+    font-weight: bold;
+    font-style: italic;
+    display: inline;
+    white-space: nowrap;
+}
+

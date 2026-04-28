@@ -170,12 +170,47 @@ def edit_message(post_id):
 
     if request.method == "POST":
         check_csrf()
-        title = request.form["title"]
-        content = request.form["content"]
-        posts.update_post(post["id"], title, content)
-        return redirect("/post/" + str(post["id"]))
+        if 'continue' in request.form:
+            title = request.form["title"]
+            content = request.form["content"]
+            posts.update_post(post["id"], title, content)
+            return redirect("/post/" + str(post["id"]))
+        if 'cancel' in request.form:
+            return redirect("/post/" + str(post["id"]))
 
     return redirect('/')
+
+@app.route("/edit/<int:post_id>/<int:comment_id>", methods=["GET", "POST"])
+def edit_comment(post_id, comment_id):
+    require_login()
+    
+    if not users.get_user(session['user_id']):
+        session.pop('username', None)
+        session.pop('user_id', None)
+        return redirect('/login')
+    
+    comment = posts.get_comment(post_id, comment_id)
+    post = posts.get_post(post_id)
+    if not comment:
+        abort(404)
+    
+    if comment['user_id'] != session['user_id']:
+        abort(403)
+    
+    if request.method == "GET":
+        return render_template("edit_comment.html", comment=comment, post=post)
+
+    if request.method == "POST":
+        check_csrf()
+        if 'continue' in request.form:
+            content = request.form["content"]
+            posts.update_comment(comment["id"], content)
+            return redirect("/post/" + str(post_id))
+        if 'cancel' in request.form:
+            return redirect("/post/" + str(post_id))
+
+    return redirect('/')
+
 
 @app.route("/remove/<int:post_id>", methods=["GET", "POST"])
 def remove_message(post_id):
@@ -200,7 +235,39 @@ def remove_message(post_id):
         check_csrf()
         if "continue" in request.form:
             posts.remove_post(post["id"])
+        if "cancel" in request.form:
+            return redirect("/post/"+str(post_id))
         return redirect("/")
+    
+    return redirect("/")
+
+@app.route("/remove/<int:post_id>/<int:comment_id>", methods=["GET", "POST"])
+def remove_comment(post_id, comment_id):
+    require_login()
+
+    if not users.get_user(session['user_id']):
+        session.pop('username', None)
+        session.pop('user_id', None)
+        return redirect('/login')
+    
+    comment = posts.get_comment(post_id, comment_id)
+    post = posts.get_post(post_id)
+    if not comment:
+        abort(404)
+
+    if comment['user_id'] != session['user_id']:
+        abort(403)
+    
+    if request.method == "GET":
+        return render_template("remove_comment.html", comment=comment, post=post)
+    
+    if request.method == "POST":
+        check_csrf()
+        if "continue" in request.form:
+            posts.remove_comment(comment["id"])
+        if "cancel" in request.form:
+            return redirect("/post/"+str(post_id))
+        return redirect("/post/"+str(post_id))
     
     return redirect("/")
 
