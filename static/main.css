@@ -10,6 +10,18 @@ body {
 
 .page h1 {
     margin-bottom: 0.3em;
+    margin: 0;
+}
+
+.title_and_rec {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.title_and_rec h1 {
+    flex: 1;
 }
 
 .header {
@@ -69,42 +81,156 @@ body {
 .post-category-info {
 }
 
+.rec-form {
+    margin: 0;
+}
+
+.recommendation-select {
+    padding: 5px 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: white;
+    color: #333;
+}
+
+.recommendation-select.recommendation-osta {
+    color: green;
+    border-color: green;
+    background-color: #e6ffe6;
+}
+
+.recommendation-select.recommendation-pidä {
+    color: blue;
+    border-color: blue;
+    background-color: lightskyblue;
+}
+
+.recommendation-select.recommendation-myy {
+    color: red;
+    border-color: red;
+    background-color: #ffe6e6;
+}
+
+.recommendation-select.recommendation-none {
+    color: #666;
+    border-color: #ccc;
+}
+
 .buy-recommendation-box {
     display: inline-block;
     color: green; 
     border: 1px solid green;
-    padding: 10px;
-    margin-top: 0px;
-    margin-bottom: 7px;
+    padding: 5px 8px;
+    margin: 0;
     background-color: #e6ffe6;
+    font-size: 14px;
+    white-space: nowrap;
 }
 
 .sell-recommendation-box {
     display: inline-block;
     color: red; 
     border: 1px solid red;
-    padding: 10px;
-    margin-top: 0px;
-    margin-bottom: 7px;
+    padding: 5px 8px;
+    margin: 0;
     background-color: #ffe6e6;
+    font-size: 14px;
+    white-space: nowrap;
 }
 
 .hold-recommendation-box {
     display: inline-block;
     color: blue; 
     border: 1px solid blue;
-    padding: 10px;
-    margin-top: 0px;
-    margin-bottom: 7px;
+    padding: 5px 8px;
+    margin: 0;
     background-color: lightskyblue;
+    font-size: 14px;
+    white-space: nowrap;
 }
 
 .reactions {
     display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .post_text {
     font-size: 20px;
+}
+
+.recommendation-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 0;
+}
+
+.recommendation-form label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.recommendation-dropdown {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: white;
+    color: #333;
+}
+
+.recommendation-dropdown:hover {
+    border-color: #999;
+}
+
+.recommendation-fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.recommendation-fieldset legend {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+.recommendation-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.radio-label input[type="radio"] {
+    cursor: pointer;
+}
+
+.clear-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.clear-btn:hover {
+    background-color: #ddd;
 }
 
 .remove_edit_post_title {
@@ -138,7 +264,7 @@ body {
 .ticker a {
   color: black;
   text-decoration: none;
-  padding: 0 16px;
+  padding: 0 12px;
 }
 
 .ticker a.ticker-osta {

@@ -10,7 +10,16 @@
 <body>
   {% include 'header.html' %}
   <div class="page">
+    <div class="title_and_rec">
+    {% if post.recommendation == 'Osta'%}
+    <h3 class="buy-recommendation-box">{{ post.recommendation }}</h3>
+    {% elif post.recommendation == 'Myy'%}
+    <h3 class="sell-recommendation-box">{{ post.recommendation }}</h3>
+    {% elif post.recommendation == 'Pidä'%}
+    <h3 class="hold-recommendation-box">{{ post.recommendation }}</h3>
+    {% endif %}
     <h1>{{ post.title }}</h1>
+    </div>
     <div class="profile-info">
       {% if post.has_image %}
       <img class="profile-info-image" src="/pfp/{{post.user_id}}">
@@ -27,13 +36,7 @@
       {% if post.strategy %}{% if post.market or post.industry %} | {% endif %}<i>{{post.strategy}}</i>{% endif %}
     </p>
     {% endif %}
-    {% if post.recommendation == 'Osta'%}
-    <h3 class="buy-recommendation-box">{{ post.recommendation }}</h3>
-    {% elif post.recommendation == 'Myy'%}
-    <h3 class="sell-recommendation-box">{{ post.recommendation }}</h3>
-    {% elif post.recommendation == 'Pidä'%}
-    <h3 class="hold-recommendation-box">{{ post.recommendation }}</h3>
-    {% endif %}
+
     {% if session.user_id %}
     <div class="reactions">
       <form action="/post/{{post.id}}/toggle-like" method="post">
@@ -46,22 +49,17 @@
       </form>
 
       {% if post.user_id != session.user_id %}
-      <form action="/post/{{post.id}}/update-recommendation" method="post">
-        <fieldset>
-          <legend>Suosituksesi</legend>
-          <input type="radio" id="buy" onchange="this.form.submit()" name="recommendation" value="buy" />
-          <label for="buy">Osta &bull; {{post.buys}}</label><br />
-
-          <input type="radio" id="hold" onchange="this.form.submit()" name="recommendation" value="hold" />
-          <label for="hold">Pidä &bull; {{post.holds}}</label><br />
-
-          <input type="radio" id="sell" onchange="this.form.submit()" name="recommendation" value="sell" />
-          <label for="sell">Myy &bull; {{post.sells}}</label><br />
-
+      <form action="/post/{{post.id}}/update-recommendation" method="post" class="recommendation-form">
+        <label>Suosituksesi:</label>
+        <select name="recommendation" onchange="this.form.submit()" class="recommendation-dropdown">
+          <option value="">Valitse suositus</option>
+          <option value="buy">Osta &bull; {{post.buys}}</option>
+          <option value="hold">Pidä &bull; {{post.holds}}</option>
+          <option value="sell">Myy &bull; {{post.sells}}</option>
           {% if current_recommendation %}
-          <button type="submit" name="recommendation" value="clear">Poista valinta</button>
+          <option value="clear">Poista valinta</option>
           {% endif %}
-        </fieldset>
+        </select>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
       </form>
       {% endif %}
