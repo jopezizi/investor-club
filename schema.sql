@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS posts (
                buys INTEGER NOT NULL DEFAULT 0,
                sells INTEGER NOT NULL DEFAULT 0,
                holds INTEGER NOT NULL DEFAULT 0,
-               recommendation TEXT
+               recommendation TEXT,
+               image BLOB
 );
 
 CREATE TABLE IF NOT EXISTS comments (

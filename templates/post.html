@@ -23,6 +23,8 @@
     <div class="profile-info">
       {% if post.has_image %}
       <img class="profile-info-image" src="/pfp/{{post.user_id}}">
+      {% else %}
+      <img class="profile-info-image" src="/static/default_pfp.svg">
       {% endif %}
       <div class="profile-info-texts">
         <b><a href="/profile/{{ post.user_id }}">{{post.username}}</a></b>

@@ -1,6 +1,6 @@
 body {
     margin: auto;
-    max-width: 50em;
+    max-width: 200em;
     font-family: Arial, Helvetica, sans-serif
 }
 
@@ -25,11 +25,41 @@ body {
 }
 
 .header {
-    margin: 1em;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  gap: 10px;
+  background: #222;
+  color: white;
 }
 
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.header-top h1 {
+  margin: 0;
+  flex: 1;
+}
+
+.header-top p {
+  margin: 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.main_title{
+    color:white;
+}
 .nav {
-    margin: 1em;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .content {

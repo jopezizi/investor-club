@@ -72,6 +72,11 @@
         <label for="sell">Myy</label>
       </fieldset>
     </p>
+    <div>
+    <p>
+      Kuva: <input type="file" name="post_image" accept=".jpg" />
+    </p>
+  </div>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Lähetä" />
     </p>
