@@ -63,7 +63,8 @@ def index(page=1):
         return redirect('/' + str(page_count))
 
     post_list = posts.get_posts(page, page_size)
-    return render_template("index.html", page = page, page_count = page_count, post_list = post_list)
+    return render_template("index.html", page = page, page_count = page_count,
+                           post_list = post_list)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
