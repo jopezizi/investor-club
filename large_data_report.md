@@ -147,3 +147,25 @@ Ja lisätään sivunavigointi ```index.html```:
   </p>
   <hr />
 ````
+
+Lisätty ```app.py``` ajanmittaus HTTP-pyynnöille:
+
+````
+@app.before_request
+def before_request():
+    g.start_time = time.time()
+
+@app.after_request
+def after_request(response):
+    elapsed_time = round(time.time() - g.start_time, 2)
+    print("Elapsed time:", elapsed_time, 's')
+    return response
+````
+
+Lisätty vielä indeksi ```schema.sql``` joka hakee julkaisut tehokkaammin taulusta:
+
+````
+CREATE INDEX IF NOT EXISTS idx_posts ON posts(user_id, sent_at DESC);
+````
+
+Nyt sivu toimii nopeasti suurillakin tietomäärillä.

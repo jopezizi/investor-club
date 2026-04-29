@@ -53,3 +53,5 @@ CREATE TABLE IF NOT EXISTS categories (
     class TEXT NOT NULL,
     name TEXT NOT NULL
 );
+
+CREATE INDEX IF NOT EXISTS idx_posts ON posts(user_id, sent_at DESC);
