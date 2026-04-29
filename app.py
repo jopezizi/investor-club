@@ -1,8 +1,9 @@
 import secrets
 import math
+import time
 
 from flask import Flask
-from flask import abort, make_response, redirect, render_template, request, session
+from flask import abort, make_response, redirect, render_template, request, session, g
 
 import markupsafe
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -18,6 +19,16 @@ app.secret_key = config.SECRET_KEY
 def check_csrf_token():
     if 'csrf_token' not in session:
         session['csrf_token'] = secrets.token_hex(16)
+
+@app.before_request
+def before_request():
+    g.start_time = time.time()
+
+@app.after_request
+def after_request(response):
+    elapsed_time = round(time.time() - g.start_time, 2)
+    print("Elapsed time:", elapsed_time, 's')
+    return response
 
 def check_csrf():
     if request.form.get('csrf_token') != session.get('csrf_token'):
