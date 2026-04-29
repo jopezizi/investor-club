@@ -66,6 +66,9 @@ body {
         margin-left: 0.5em;
 }
 
+.page_nav {
+        margin-left: 0.5em;
+}
 .post_homepage {
         border: 2px solid grey;
         margin: 1em;
@@ -288,7 +291,7 @@ body {
     display: inline-block;
     white-space: nowrap;
     will-change: transform;
-    animation: ticker-scroll 60s linear infinite;
+    animation: ticker-scroll 40s linear infinite;
     padding-left: 100%; 
 }
 

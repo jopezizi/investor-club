@@ -1,6 +1,19 @@
 import db
 
-def get_posts() -> list:
+def get_posts(page, page_size) -> list:
+    sql = '''SELECT
+                p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market,
+                p.industry, p.strategy, p.recommendation, p.image
+            FROM posts p
+            JOIN users u ON P.user_id = u.id
+            ORDER BY p.id DESC
+            LIMIT ? OFFSET ?
+            '''
+    limit = page_size
+    offset = page_size * (page -1)
+    return db.query(sql, [limit, offset])
+
+def get_all_posts() -> list:
     sql = '''SELECT
                 p.id, p.title, strftime('%d.%m.%Y %H:%M', p.sent_at) AS sent_at, p.user_id, u.username, p.likes, p.buys, p.sells, p.market,
                 p.industry, p.strategy, p.recommendation, p.image
@@ -10,6 +23,10 @@ def get_posts() -> list:
             '''
     return db.query(sql)
 
+def post_count():
+    sql = 'SELECT COUNT(id) FROM posts'
+    result = db.query(sql)
+    return result[0][0] if result else 0
 
 def add_post(title, content, user_id, market, industry, strategy, recommendation, image):
     sql = '''

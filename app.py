@@ -1,4 +1,5 @@
 import secrets
+import math
 
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, request, session
@@ -34,13 +35,24 @@ def require_login():
 
 @app.context_processor
 def inject_posts():
-    all_posts = posts.get_posts()
+    all_posts = posts.get_posts(1,20)
     return {"all_posts": all_posts}
 
 @app.route("/")
-def index():
-    post_list = posts.get_posts()
-    return render_template("index.html", post_list = post_list)
+@app.route('/<int:page>')
+def index(page=1):
+    page_size = 10
+    post_count = posts.post_count()
+    page_count = math.ceil(post_count / page_size)
+    page_count = max(page_count, 1)
+
+    if page < 1:
+        return redirect('/1')
+    if page > page_count:
+        return redirect('/' + str(page_count))
+
+    post_list = posts.get_posts(page, page_size)
+    return render_template("index.html", page = page, page_count = page_count, post_list = post_list)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
