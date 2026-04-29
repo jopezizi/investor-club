@@ -368,7 +368,7 @@ def update_recommendation(post_id):
 def categories():
     classes = posts.get_classes()
     categories_list = []
-    for i, class_item in enumerate(classes):
+    for i, class_item in enumerate(classes): # pyright: ignore[reportArgumentType]
         categories_list.append([])
         items = posts.get_category_items(class_item[0])
         for cat in items:

@@ -6,3 +6,4 @@ venv
 database.db-shm
 database.db-wal
 .pylintrc
+seed.py
