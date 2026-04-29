@@ -17,3 +17,7 @@ Sijoitusalusta, jossa käyttäjät voivat julkaista ja kommentoida osakevalintoj
 - Suorita setup.sh- tiedosto (terminaalissa ./setup.sh) asentaaksesi kaikki tarvittavat riippuvuudet ja käynnistääksesi sivun
 - Näet terminaalista, mihin osoitteeseen verkkosivu käynnistyy (oletus http://127.0.0.1:5000)
 - Voit alkaa käyttämään sivua.
+
+# RAPORTIT
+- Pylint- raportti löytyy tiedostosta ```pylint-report.md```
+- Suuren tietomäärän raportti ja testidatan luomiseen käytetty koodi löytyy tiedostosta ```large-data-report.md```
