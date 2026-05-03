@@ -108,7 +108,7 @@ body {
         gap: 3px;
 }
 
-.post_image img {
+.post_image {
         display: block;
         max-width: 65%;
         width: auto;
